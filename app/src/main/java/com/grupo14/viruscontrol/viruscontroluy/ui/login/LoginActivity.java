@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
-                Intent i = new Intent(LoginActivity.this, SolicitarMedico.class);
+                Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
                 startActivity(i);
             }
         });
