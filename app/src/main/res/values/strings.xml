@@ -25,4 +25,7 @@
 
     <string name="solicitar_medico_domicilio">Solicitar medico a domicilio</string>
     <string name="cerrar_sesion">Cerrar sesion</string>
+    <string name="ingrese_sintoma">Ingrese sintomas</string>
+    <string name="agregar_sintonma">Agregar sintoma</string>
+    <string name="siguiente">Siguiente</string>
 </resources>

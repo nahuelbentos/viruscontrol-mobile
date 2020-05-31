@@ -40,5 +40,12 @@
         android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/solicitar_medico"
+        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.solicitarmedico.SolicitarMedicoFragment"
+        android:label="@string/solicitar_medico_domicilio"
+        tools:layout="@layout/fragment_solicitar_medico" />
+
+
 
 </navigation>
