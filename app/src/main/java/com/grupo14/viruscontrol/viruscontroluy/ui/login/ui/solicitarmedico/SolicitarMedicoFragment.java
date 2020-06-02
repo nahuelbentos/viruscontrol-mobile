@@ -1,5 +1,6 @@
 package com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.solicitarmedico;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -24,11 +25,15 @@ import java.util.List;
 
 public class SolicitarMedicoFragment extends Fragment {
 
-    Button btnAgregarSintoma;
-    Button btnSiguiente;
-    EditText editTextSintoma;
-    List<String> sintomasList = new ArrayList<String>();
-    ListView lvSintomas;
+    private SolicitarMedicoViewModel mViewModel;
+
+    private Button btnAgregarSintoma;
+    private Button btnSiguiente;
+    private EditText editTextSintoma;
+    private List<String> sintomasList = new ArrayList<String>();
+    private ListView lvSintomas;
+
+    private SolicitarMedicoViewModel solicitarMedicoViewModel;
 
     public static SolicitarMedicoFragment newInstance() {
         return new SolicitarMedicoFragment();
@@ -37,8 +42,17 @@ public class SolicitarMedicoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View solicitarMedicoView = inflater.inflate(R.layout.fragment_solicitar_medico, container, false);
+        solicitarMedicoViewModel =
+                ViewModelProviders.of(this).get(SolicitarMedicoViewModel.class);
 
+        final View solicitarMedicoView = inflater.inflate(R.layout.solicitar_medico_fragment, container, false);
+        solicitarMedicoViewModel.getSintomaList().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, strings);
+                lvSintomas.setAdapter(adapter);
+            }
+        });
         editTextSintoma = (EditText) solicitarMedicoView.findViewById(R.id.sintomaEditText);
         btnAgregarSintoma = (Button) solicitarMedicoView.findViewById(R.id.btnAgregarSintoma);
         lvSintomas = (ListView) solicitarMedicoView.findViewById(R.id.lvSintomas);
@@ -48,16 +62,22 @@ public class SolicitarMedicoFragment extends Fragment {
             public void onClick(View v) {
                 String stringSintoma = editTextSintoma.getText().toString();
                 sintomasList.add(stringSintoma);
-                System.out.println("Sintomas: " + sintomasList.toString());
+                solicitarMedicoViewModel.updateSintomas(sintomasList);
                 Toast.makeText(getActivity(),"Sintoma agregado: " + stringSintoma, Toast.LENGTH_SHORT).show();
                 editTextSintoma.setText("");
                 ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,sintomasList);
                 lvSintomas.setAdapter(adapter);
-
             }
         });
 
         return solicitarMedicoView;
+    }
+  
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = ViewModelProviders.of(getActivity()).get(SolicitarMedicoViewModel.class);
+        // TODO: Use the ViewModel
 
     }
 
