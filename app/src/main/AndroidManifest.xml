@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.login.ui.solicitarmedico.SolicitarMedicoFragment"></activity>
+        <activity android:name=".ui.login.ui.solicitarmedico.SolicitarMedicoFragment" />
         <activity android:name=".ui.login.ui.solicitar_medico.SolicitarMedico" />
         <activity
             android:name=".ui.login.MenuUsuarioCiudadano"

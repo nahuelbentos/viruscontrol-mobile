@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.slideshow.SlideshowFragmentFragment"
+        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
@@ -45,6 +45,7 @@
         android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.solicitarmedico.SolicitarMedicoFragment"
         android:label="@string/solicitar_medico_domicilio"
         tools:layout="@layout/solicitar_medico_fragment" />
+
 
 
 

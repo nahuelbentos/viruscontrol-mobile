@@ -1,8 +1,10 @@
 package com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.solicitarmedico;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.grupo14.viruscontrol.viruscontroluy.R;
+import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.seleccionarprestador.SeleccionarPrestadorFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +56,11 @@ public class SolicitarMedicoFragment extends Fragment {
                 lvSintomas.setAdapter(adapter);
             }
         });
+
         editTextSintoma = (EditText) solicitarMedicoView.findViewById(R.id.sintomaEditText);
         btnAgregarSintoma = (Button) solicitarMedicoView.findViewById(R.id.btnAgregarSintoma);
         lvSintomas = (ListView) solicitarMedicoView.findViewById(R.id.lvSintomas);
+        btnSiguiente = (Button) solicitarMedicoView.findViewById(R.id.btnSintomasSiguiente);
 
         btnAgregarSintoma.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -67,6 +72,21 @@ public class SolicitarMedicoFragment extends Fragment {
                 editTextSintoma.setText("");
                 ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,sintomasList);
                 lvSintomas.setAdapter(adapter);
+            }
+        });
+
+        btnSiguiente = (Button) solicitarMedicoView.findViewById(R.id.btnSintomasSiguiente);
+        btnSiguiente.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Fragment nuevoFragmento = SeleccionarPrestadorFragment.newInstance();
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+                transaction.addToBackStack(null);
+
+                // Commit a la transacción
+                transaction.commit();
             }
         });
 
