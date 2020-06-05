@@ -1,4 +1,4 @@
-package com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.confirardatos_solicitarmedico;
+package com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.confirmardatos_solicitarmedico;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

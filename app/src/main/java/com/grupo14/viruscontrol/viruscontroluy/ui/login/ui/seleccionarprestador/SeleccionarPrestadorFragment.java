@@ -19,8 +19,8 @@ import android.widget.Spinner;
 
 import com.grupo14.viruscontrol.viruscontroluy.R;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.PrestadoraSalud;
-import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.confirardatos_solicitarmedico.ConfirmarDatosFragment;
-import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.confirardatos_solicitarmedico.ConfirmarDatosViewModel;
+import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.confirmardatos_solicitarmedico.ConfirmarDatosFragment;
+import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.confirmardatos_solicitarmedico.ConfirmarDatosViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

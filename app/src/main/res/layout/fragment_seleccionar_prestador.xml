@@ -24,10 +24,7 @@
             android:id="@+id/spinner_prestadores_salud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sintomas_ingresados_solicitar_medico"/>
+
         <Button
             android:id="@+id/btnSiguienteSeleccionarPrestadora"
             android:layout_width="match_parent"

@@ -34,4 +34,5 @@
     <string name="prestadora_salud">"Prestadora de salud: "</string>
     <string name="medico_asignado">"Medico asignado: "</string>
     <string name="confirmar_visita">Confirmar Visita</string>
+    <string name="viruscontrol_uy">Viruscontrol.uy</string>
 </resources>

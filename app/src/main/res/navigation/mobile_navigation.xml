@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/viruscontrol_uy"
         tools:layout="@layout/fragment_home">
 
         <action
