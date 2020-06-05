@@ -29,4 +29,9 @@
     <string name="agregar_sintonma">Agregar sintoma</string>
     <string name="siguiente">Siguiente</string>
     <string name="seleccionar_prestador_salud">Seleccionar prestador de salud</string>
+    <string name="sintomas_ingresados_solicitar_medico">Sintomas ingresados</string>
+    <string name="confimar_datos_solicitar_medico">"Confirmar datos "</string>
+    <string name="prestadora_salud">"Prestadora de salud: "</string>
+    <string name="medico_asignado">"Medico asignado: "</string>
+    <string name="confirmar_visita">Confirmar Visita</string>
 </resources>

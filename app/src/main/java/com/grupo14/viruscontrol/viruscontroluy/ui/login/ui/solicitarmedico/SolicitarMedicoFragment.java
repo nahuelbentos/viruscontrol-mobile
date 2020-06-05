@@ -4,7 +4,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,7 +47,7 @@ public class SolicitarMedicoFragment extends Fragment {
         solicitarMedicoViewModel =
                 ViewModelProviders.of(this).get(SolicitarMedicoViewModel.class);
 
-        final View solicitarMedicoView = inflater.inflate(R.layout.solicitar_medico_fragment, container, false);
+        final View solicitarMedicoView = inflater.inflate(R.layout.fragment_solicitar_medico, container, false);
         solicitarMedicoViewModel.getSintomaList().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> strings) {
@@ -79,8 +78,12 @@ public class SolicitarMedicoFragment extends Fragment {
         btnSiguiente.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Fragment nuevoFragmento = SeleccionarPrestadorFragment.newInstance();
 
+                Bundle datosAEnviar = new Bundle();
+                datosAEnviar.putStringArrayList("sintomasList", (ArrayList<String>) sintomasList);
+
+                Fragment nuevoFragmento = SeleccionarPrestadorFragment.newInstance();
+                nuevoFragmento.setArguments(datosAEnviar);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
                 transaction.addToBackStack(null);
