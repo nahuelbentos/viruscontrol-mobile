@@ -6,6 +6,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -14,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,18 +28,52 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.LoggingBehavior;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.widget.LoginButton;
+import com.grupo14.viruscontrol.viruscontroluy.BuildConfig;
 import com.grupo14.viruscontrol.viruscontroluy.R;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModel;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModelFactory;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    CallbackManager callbackManager;
+    ProfileTracker mProfileTracker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        LoginButton loginButtonFacebook;
+
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.grupo14.viruscontrol.viruscontroluy",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                System.out.println("KeyHash: " + Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        }
+        catch (PackageManager.NameNotFoundException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
+        }
+
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -42,6 +81,70 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        callbackManager = CallbackManager.Factory.create();
+
+        if (BuildConfig.DEBUG) {
+            FacebookSdk.setIsDebugEnabled(true);
+            FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
+        }
+
+        loginButtonFacebook = (LoginButton) findViewById(R.id.login_button_facebook);
+        //loginButtonFacebook.setReadPermissions(Arrays.asList("user_status"));
+        //loginButtonFacebook.setReadPermissions("email");
+
+        loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<com.facebook.login.LoginResult>() {
+            @Override
+            public void onSuccess(com.facebook.login.LoginResult loginResult) {
+                Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
+                System.out.println("Token 1: " + AccessToken.getCurrentAccessToken().toString());
+
+                //String userId = AccessToken.getCurrentAccessToken().getUserId();
+                if(Profile.getCurrentProfile() == null) {
+                    mProfileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                            Log.v("facebook - profile", currentProfile.getFirstName());
+                            mProfileTracker.stopTracking();
+                        }
+                    };
+                    // no need to call startTracking() on mProfileTracker
+                    // because it is called by its constructor, internally.
+                }
+                else {
+                    Profile profile = Profile.getCurrentProfile();
+                    Log.v("facebook - profile", profile.getFirstName());
+                    Log.v("facebook - profile", profile.getLastName());
+                    Log.v("facebook - profile", profile.getId());
+                    //System.out.println("Profile: " + Profile.getCurrentProfile());
+
+                    i.putExtra("userName", profile.getFirstName());
+                    i.putExtra("lastName", profile.getLastName());
+                    i.putExtra("userId", profile.getId());
+                }
+                /*
+                Profile.fetchProfileForCurrentAccessToken();
+                Profile profile = Profile.getCurrentProfile();
+                System.out.println("Profile: " + profile);
+                String name = profile.getName();
+                String lastName = profile.getLastName();
+                String imageURL = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
+
+                 */
+
+                startActivity(i);
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), "Se cancelo el inicio de sesion con facebook", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), "Error en inicio de sesion con facebook", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -130,5 +233,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode,resultCode,data);
     }
 }
