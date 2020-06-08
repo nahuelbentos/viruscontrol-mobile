@@ -21,7 +21,7 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
         <item
-            android:id="@+id/cerrar_sesion"
+            android:id="@+id/cerrar_sesion_fragment"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/cerrar_sesion" />
     </group>

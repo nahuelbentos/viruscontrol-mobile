@@ -36,6 +36,9 @@
     <string name="confirmar_visita">Confirmar Visita</string>
     <string name="viruscontrol_uy">Viruscontrol.uy</string>
 
-    <string name="facebook_app_id">310065746652683</string> <string name="fb_login_protocol_scheme">fb310065746652683</string>
+    <string name="facebook_app_id">310065746652683</string>
+    <string name="fb_login_protocol_scheme">fb310065746652683</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

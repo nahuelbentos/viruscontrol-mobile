@@ -50,13 +50,21 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     CallbackManager callbackManager;
     ProfileTracker mProfileTracker;
+    AccessToken accessToken;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        if(isLoggedIn){
+            Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
+            startActivity(i);
+        }
+
         setContentView(R.layout.activity_login);
         LoginButton loginButtonFacebook;
-
 
         try {
             PackageInfo info = getPackageManager().getPackageInfo(

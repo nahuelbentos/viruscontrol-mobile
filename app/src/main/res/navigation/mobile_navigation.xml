@@ -45,8 +45,11 @@
         android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.solicitarmedico.SolicitarMedicoFragment"
         android:label="@string/solicitar_medico_domicilio"
         tools:layout="@layout/fragment_solicitar_medico" />
-
-
+    <fragment
+        android:id="@+id/cerrar_sesion_fragment"
+        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.cerrarsesion.CerrarSesionFragment"
+        android:label="@string/cerrar_sesion"
+        tools:layout="@layout/fragment_cerrar_sesion" />
 
 
 </navigation>
