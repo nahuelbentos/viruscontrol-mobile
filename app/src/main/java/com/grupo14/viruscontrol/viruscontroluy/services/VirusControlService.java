@@ -13,7 +13,7 @@ public interface VirusControlService {
     @POST("/autenticacion/entrar/ciudadano")
     Call<LoginResponse> backendLogin(
             @Field("nombre") String nombre,
-            @Field("appelido") String apellido,
+            @Field("apellido") String apellido,
             @Field("correo") String correo,
             @Field("username") String username
     );
