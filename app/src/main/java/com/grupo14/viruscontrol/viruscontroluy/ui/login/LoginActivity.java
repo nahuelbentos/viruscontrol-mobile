@@ -43,6 +43,7 @@ import com.facebook.login.widget.LoginButton;
 import com.grupo14.viruscontrol.viruscontroluy.BuildConfig;
 import com.grupo14.viruscontrol.viruscontroluy.R;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.Usuario;
+import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontrol.viruscontroluy.services.LoginResponse;
 import com.grupo14.viruscontrol.viruscontroluy.services.VirusControlService;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModel;
@@ -53,6 +54,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if(isLoggedIn){
             Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
@@ -77,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_login);
-        LoginButton loginButtonFacebook;
 
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
@@ -110,7 +111,8 @@ public class LoginActivity extends AppCompatActivity {
             FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
         }
 
-        loginButtonFacebook = (LoginButton) findViewById(R.id.login_button_facebook);
+        LoginButton loginButtonFacebook = (LoginButton) findViewById(R.id.login_button_facebook);
+        loginButtonFacebook.setPermissions(Arrays.asList("email","public_profile"));
         //loginButtonFacebook.setReadPermissions(Arrays.asList("user_status"));
         //loginButtonFacebook.setReadPermissions("email");
 
@@ -119,10 +121,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(com.facebook.login.LoginResult loginResult) {
                 Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
                 System.out.println("Token 1: " + AccessToken.getCurrentAccessToken().toString());
-                String Name, FEmail;
+                AccessToken aToken = AccessToken.getCurrentAccessToken();
                 // Facebook Email address
                 GraphRequest request = GraphRequest.newMeRequest(
-                        accessToken,
+                        aToken,
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -138,8 +140,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     String[] splited = Name.split("\\s+");
                                     Usuario user = new Usuario(splited[0],splited[1],FEmail,FEmail);
-                                    Call<LoginResponse> callBackendLogin = VirusControlService.backendLogin(user.getNombre(),user.getApellido(),user.getCorreo(),user.getUsername());
-                                    callBackendLogin.enqueue(new Callback<LoginResponse>() {
+                                    Call<LoginResponse> callBackendLogin = ApiAdapter.getApiService().backendLogin(user.getNombre(),user.getApellido(),user.getCorreo(),user.getUsername());                                   callBackendLogin.enqueue(new Callback<LoginResponse>() {
                                         @Override
                                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                             LoginResponse loginResponse = response.body();
@@ -305,4 +306,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode,resultCode,data);
     }
+
+
+    public void login() {
+        LoginManager.getInstance().logInWithReadPermissions(
+                this,
+                Arrays.asList("email","public_profile")
+        );
+    }
 }
+
+
+
