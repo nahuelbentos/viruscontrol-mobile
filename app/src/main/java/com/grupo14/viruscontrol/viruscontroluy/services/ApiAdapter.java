@@ -17,7 +17,7 @@ public class ApiAdapter {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
 
-        String baseUrl = "http://localhost:8080/viruscontrol-web/rest/";
+        String baseUrl = "https://viruscontroluy.xyz:8443/viruscontrol-web/rest/";
 
         if (API_SERVICE == null) {
             Retrofit retrofit = new Retrofit.Builder()
