@@ -1,21 +1,26 @@
 package com.grupo14.viruscontrol.viruscontroluy.modelos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
-public abstract class Usuario implements Serializable{
+public class Usuario implements Serializable{
     private static final long serialVersionUID = 3827070902901902553L;
 
     private int idUsuario;
-
+    @SerializedName("nombre")
     private String nombre;
+    @SerializedName("apellido")
     private String apellido;
     private String direccion;
     private Calendar fechaNacimiento;
     private String nacionalidad;
+    @SerializedName("correo")
     private String correo;
 
     /** atributos del negocio VirusControl **/
+    @SerializedName("username")
     private String username;
     private String password;
     private boolean primerIngreso;
