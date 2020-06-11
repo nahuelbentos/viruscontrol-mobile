@@ -33,17 +33,30 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.LoggingBehavior;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 import com.grupo14.viruscontrol.viruscontroluy.BuildConfig;
 import com.grupo14.viruscontrol.viruscontroluy.R;
+import com.grupo14.viruscontrol.viruscontroluy.modelos.Usuario;
+import com.grupo14.viruscontrol.viruscontroluy.services.LoginResponse;
+import com.grupo14.viruscontrol.viruscontroluy.services.VirusControlService;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModel;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModelFactory;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -56,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if(isLoggedIn){
             Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
@@ -106,6 +119,50 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(com.facebook.login.LoginResult loginResult) {
                 Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
                 System.out.println("Token 1: " + AccessToken.getCurrentAccessToken().toString());
+                String Name, FEmail;
+                // Facebook Email address
+                GraphRequest request = GraphRequest.newMeRequest(
+                        accessToken,
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                // Insert your code here
+                                Log.v("LoginActivity Response ", response.toString());
+
+                                try {
+                                    String Name = object.getString("name");
+
+                                    String FEmail = object.getString("email");
+                                    Log.v("Email = ", " " + FEmail);
+                                    Toast.makeText(getApplicationContext(), "Name " + Name, Toast.LENGTH_LONG).show();
+
+                                    String[] splited = Name.split("\\s+");
+                                    Usuario user = new Usuario(splited[0],splited[1],FEmail,FEmail);
+                                    Call<LoginResponse> callBackendLogin = VirusControlService.backendLogin(user.getNombre(),user.getApellido(),user.getCorreo(),user.getUsername());
+                                    callBackendLogin.enqueue(new Callback<LoginResponse>() {
+                                        @Override
+                                        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                                            LoginResponse loginResponse = response.body();
+                                            Toast.makeText(getApplicationContext(), loginResponse.getSessionToken(),Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<LoginResponse> call, Throwable t) {
+                                            call.cancel();
+                                        }
+
+                                    });
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email");
+                request.setParameters(parameters);
+                request.executeAsync();
 
                 //String userId = AccessToken.getCurrentAccessToken().getUserId();
                 if(Profile.getCurrentProfile() == null) {
@@ -139,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
                 String imageURL = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
 
                  */
+
 
                 startActivity(i);
             }
