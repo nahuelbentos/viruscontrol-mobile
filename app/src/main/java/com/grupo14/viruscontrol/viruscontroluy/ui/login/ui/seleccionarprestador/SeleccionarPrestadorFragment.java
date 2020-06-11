@@ -25,6 +25,8 @@ import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.confirmardatos_solici
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Retrofit;
+
 public class SeleccionarPrestadorFragment extends Fragment {
 
     private List<String> prestadoresList = new ArrayList<String>();
@@ -50,6 +52,7 @@ public class SeleccionarPrestadorFragment extends Fragment {
         prestadoresSpinner  = (Spinner) seleccionarPrestadorView.findViewById(R.id.spinner_prestadores_salud);
 
         //TODO: Obtener prestadores desde servicio REST
+
         prestadoresList.add("Medica Uruguaya");
         prestadoresList.add("Casmu");
         prestadoresList.add("Asociacion Española");
