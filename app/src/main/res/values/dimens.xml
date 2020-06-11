@@ -8,5 +8,8 @@
     <dimen name="tam_20">20dp</dimen>
     <dimen name="tam_25">25dp</dimen>
     <dimen name="tam_15">15dp</dimen>
+    <dimen name="tam_120_dp">150dp</dimen>
+    <dimen name="tam_90_dp">90dp</dimen>
+    <dimen name="tam_70_dp">70dp</dimen>
 
 </resources>
