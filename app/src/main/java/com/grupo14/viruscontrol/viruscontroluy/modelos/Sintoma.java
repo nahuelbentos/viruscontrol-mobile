@@ -1,18 +1,18 @@
 package com.grupo14.viruscontrol.viruscontroluy.modelos;
 
 public class Sintoma {
-    private String id;
+    private Integer id;
     private String nombre;
 //    public Sintoma(){
 //        super();
 //    }
-    public Sintoma(String id1, String nombre){
+    public Sintoma(Integer id1, String nombre){
 
         this.id = id1;
         this.nombre = nombre;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -20,7 +20,7 @@ public class Sintoma {
         return nombre;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

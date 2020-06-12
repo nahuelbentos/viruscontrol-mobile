@@ -11,7 +11,7 @@ public class ApiAdapter {
     public static VirusControlService getApiService() {
         // Creamos un interceptor y le indicamos el log level a usar
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
         // Asociamos el interceptor a las peticiones
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
