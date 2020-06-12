@@ -30,15 +30,10 @@ public class ConfirmarDatosFragment extends Fragment {
     private ConfirmarDatosViewModel mViewModel;
     private String prestadoraSalud;
     private List<String> sintomasList;
-    private Medico medicoAsignado;
     private ListView lvSintomasListConfirmarDatos;
     private Button confirmarVisitaSolicitarMedico;
-    private TextView tvPrestadoraSaludConfirmar;
 
-    //Atributos temporales para prueba
-    private String correoMedico = "dr.house@netflix.com";
-    private String nombreMedico = "Gregory";
-    private String apellidoMedico = "House";
+
 
     public static ConfirmarDatosFragment newInstance() {
         return new ConfirmarDatosFragment();
@@ -51,18 +46,15 @@ public class ConfirmarDatosFragment extends Fragment {
         confirmarDatosView = inflater.inflate(R.layout.fragment_confirmar_datos, container, false);
 
         mViewModel = new ConfirmarDatosViewModel();
-        tvPrestadoraSaludConfirmar = confirmarDatosView.findViewById(R.id.prestadora_seleccionada_solicitar_medico);
-
-        //TODO: obtener medico asignado mediante servicio REST
 
         Bundle datosRecuperados = getArguments();
+
         if (datosRecuperados != null) {
             sintomasList = datosRecuperados.getStringArrayList("sintomasList");
-            prestadoraSalud = datosRecuperados.getString("prestadoraSalud");
-            tvPrestadoraSaludConfirmar.setText(prestadoraSalud);
+            //prestadoraSalud = datosRecuperados.getString("prestadoraSalud");
+            //tvPrestadoraSaludConfirmar.setText(prestadoraSalud);
             mViewModel.setSintomasList(sintomasList);
-            //TODO: Obtener prestadora mediante su clave, ver como
-            mViewModel.setPrestadoraSalud(new PrestadoraSalud());
+
 
             lvSintomasListConfirmarDatos = confirmarDatosView.findViewById(R.id.sintomasIngresadosConfirmarDatos);
             ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, mViewModel.getSintomasList().getValue());

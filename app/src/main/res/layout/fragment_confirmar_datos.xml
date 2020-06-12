@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,53 +17,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/confimar_datos_solicitar_medico"
+            android:text="@string/confirmar_sintomas_ingresados"
             android:textSize="@dimen/tam_25"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/prestadora_salud"
-            android:textSize="@dimen/tam_20"/>
-
-        <TextView
-            android:id="@+id/prestadora_seleccionada_solicitar_medico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/tam_15"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/medico_asignado"
-            android:textSize="@dimen/tam_20"/>
-
-        <TextView
-            android:id="@+id/medico_asignad_solicitar_medico"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/tam_15"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sintomas_ingresados_solicitar_medico"
-            android:textSize="@dimen/tam_20"/>
 
         <ListView
             android:layout_width="wrap_content"
@@ -79,11 +39,9 @@
             android:id="@+id/btnConfirmarVisita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/confirmar_visita"/>
+            android:text="@string/confirmar_visita"
+            />
 
     </LinearLayout>
 
-
-
-</FrameLayout>
+</RelativeLayout>
