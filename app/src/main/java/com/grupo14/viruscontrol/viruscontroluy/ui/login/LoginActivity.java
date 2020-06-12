@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,8 +56,6 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
 
 import retrofit2.Call;
@@ -71,17 +68,11 @@ public class LoginActivity extends AppCompatActivity {
     CallbackManager callbackManager;
     ProfileTracker mProfileTracker;
     AccessToken accessToken;
-    TextView userNameLogged;
-    TextView lastNameLogged;
-    ImageView userLoggedImage;
-    String username;
-    static LoggedInUserView loggedInUserView;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if(isLoggedIn){
@@ -115,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        userNameLogged = findViewById(R.id.usernameSideMenu);
         callbackManager = CallbackManager.Factory.create();
 
         if (BuildConfig.DEBUG) {
@@ -132,9 +122,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(com.facebook.login.LoginResult loginResult) {
                 Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
-                finish();
-                //System.out.println("Token 1: " + AccessToken.getCurrentAccessToken().toString());
-                final List<String> datosUsuarioFacebook= new ArrayList<String>();
                 System.out.println("Token 1: " + AccessToken.getCurrentAccessToken().toString());
                 AccessToken aToken = AccessToken.getCurrentAccessToken();
                 // Facebook Email address
@@ -191,15 +178,9 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                             Log.v("facebook - profile", currentProfile.getFirstName());
-                            //userNameLogged.setText(currentProfile.getFirstName() + " " + currentProfile.getLastName());
                             mProfileTracker.stopTracking();
-                            //System.out.println("UserName::: " + currentProfile.getFirstName() + " " + currentProfile.getLastName());
-                            //userNameLogged.setText(currentProfile.getFirstName() + " " + currentProfile.getLastName());
-                            //username = currentProfile.getFirstName() + " " + currentProfile.getLastName();
-
                         }
                     };
-
                     // no need to call startTracking() on mProfileTracker
                     // because it is called by its constructor, internally.
                 }
@@ -208,8 +189,22 @@ public class LoginActivity extends AppCompatActivity {
                     Log.v("facebook - profile", profile.getFirstName());
                     Log.v("facebook - profile", profile.getLastName());
                     Log.v("facebook - profile", profile.getId());
+                    //System.out.println("Profile: " + Profile.getCurrentProfile());
+
+                    i.putExtra("userName", profile.getFirstName());
+                    i.putExtra("lastName", profile.getLastName());
+                    i.putExtra("userId", profile.getId());
                 }
-                //i.putExtra("username", username);
+                /*
+                Profile.fetchProfileForCurrentAccessToken();
+                Profile profile = Profile.getCurrentProfile();
+                System.out.println("Profile: " + profile);
+                String name = profile.getName();
+                String lastName = profile.getLastName();
+                String imageURL = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
+
+                 */
+
 
                 startActivity(i);
             }
