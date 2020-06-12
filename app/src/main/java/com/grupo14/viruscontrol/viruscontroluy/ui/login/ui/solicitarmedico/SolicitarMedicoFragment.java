@@ -52,7 +52,8 @@ public class SolicitarMedicoFragment extends Fragment {
         solicitarMedicoViewModel =
                 ViewModelProviders.of(this).get(SolicitarMedicoViewModel.class);
 
-        //Cargamos el spinner de sintomas hardcodeado...
+        //TODO: Cargar sintomasListFromBackend desde el backend
+        //mienstras se cargar manualmente
         sintomasListFromBackend.add("Sintoma 1");
         sintomasListFromBackend.add("Sintoma 2");
         sintomasListFromBackend.add("Sintoma 3");
@@ -78,19 +79,20 @@ public class SolicitarMedicoFragment extends Fragment {
         btnAgregarSintoma.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                try {
-                    String sintomaSeleccionado = spinnerSintomasSolicitarMedico.getSelectedItem().toString();
-                    sintomasIngresadosSolicitarMedico.add(sintomaSeleccionado);
 
-                    int posSelectedItem = spinnerSintomasSolicitarMedico.getSelectedItemPosition();
-                    sintomasListFromBackend.remove(posSelectedItem);
+                    try {
+                        String sintomaSeleccionado = spinnerSintomasSolicitarMedico.getSelectedItem().toString();
+                        sintomasIngresadosSolicitarMedico.add(sintomaSeleccionado);
 
-                    spinnerSintomasSolicitarMedico.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item,sintomasListFromBackend));
-                    lvSintomasIngresadosSolicitarMedico.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,sintomasIngresadosSolicitarMedico));
-                }catch (Exception e){
-                    Log.v("Error ::: SolicitarMedico: No hay mas sintomas para agregar", e.getMessage());
-                    Toast.makeText(getActivity(), "No hay mas sintomas para agregar!", Toast.LENGTH_LONG).show();
-                }
+                        int posSelectedItem = spinnerSintomasSolicitarMedico.getSelectedItemPosition();
+                        sintomasListFromBackend.remove(posSelectedItem);
+
+                        spinnerSintomasSolicitarMedico.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item,sintomasListFromBackend));
+                        lvSintomasIngresadosSolicitarMedico.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,sintomasIngresadosSolicitarMedico));
+                    }catch (Exception e){
+                        Log.v("Error ::: SolicitarMedico: No hay mas sintomas para agregar", e.getMessage());
+                        Toast.makeText(getActivity(), "No hay mas sintomas para agregar!", Toast.LENGTH_LONG).show();
+                    }
             }
         });
 
@@ -98,19 +100,22 @@ public class SolicitarMedicoFragment extends Fragment {
         btnSiguiente.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                if(!sintomasIngresadosSolicitarMedico.isEmpty()){
+                    Bundle datosAEnviar = new Bundle();
+                    datosAEnviar.putStringArrayList("sintomasList", (ArrayList<String>) sintomasIngresadosSolicitarMedico);
 
-                Bundle datosAEnviar = new Bundle();
-                datosAEnviar.putStringArrayList("sintomasList", (ArrayList<String>) sintomasIngresadosSolicitarMedico);
 
+                    Fragment nuevoFragmento = ConfirmarDatosFragment.newInstance();
+                    nuevoFragmento.setArguments(datosAEnviar);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
+                    transaction.addToBackStack(null);
 
-                Fragment nuevoFragmento = ConfirmarDatosFragment.newInstance();
-                nuevoFragmento.setArguments(datosAEnviar);
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
-                transaction.addToBackStack(null);
-
-                // Commit a la transacción
-                transaction.commit();
+                    // Commit a la transacción
+                    transaction.commit();
+                }else{
+                    Toast.makeText(getActivity(), "Debe ingresar al menos un sintoma", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
