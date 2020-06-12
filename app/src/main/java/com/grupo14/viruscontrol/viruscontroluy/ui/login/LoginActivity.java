@@ -45,10 +45,12 @@ import com.grupo14.viruscontrol.viruscontroluy.BuildConfig;
 import com.grupo14.viruscontrol.viruscontroluy.R;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.Usuario;
 import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
+import com.grupo14.viruscontrol.viruscontroluy.services.LoginRequest;
 import com.grupo14.viruscontrol.viruscontroluy.services.LoginResponse;
 import com.grupo14.viruscontrol.viruscontroluy.services.VirusControlService;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModel;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModelFactory;
+import com.grupo14.viruscontrol.viruscontroluy.utility.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -152,11 +154,16 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "Name " + Name, Toast.LENGTH_LONG).show();
 
                                     String[] splited = Name.split("\\s+");
-                                    Usuario user = new Usuario(splited[0],splited[1],FEmail,FEmail);
-                                    Call<LoginResponse> callBackendLogin = ApiAdapter.getApiService().backendLogin(user.getNombre(),user.getApellido(),user.getCorreo(),user.getUsername());                                   callBackendLogin.enqueue(new Callback<LoginResponse>() {
+                                    LoginRequest loginRequest = new LoginRequest(splited[0],splited[1],FEmail,FEmail);
+
+                                    Call<LoginResponse> callBackendLogin = ApiAdapter.getApiService().backendLogin(loginRequest);
+                                    callBackendLogin.enqueue(new Callback<LoginResponse>() {
                                         @Override
                                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                             LoginResponse loginResponse = response.body();
+                                            if (loginResponse != null) {
+                                                Utility.getInstance().setSessionToken(loginResponse.getSessionToken());
+                                            }
 
                                         }
 

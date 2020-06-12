@@ -1,28 +1,63 @@
+
 package com.grupo14.viruscontrol.viruscontroluy.services;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.grupo14.viruscontrol.viruscontroluy.modelos.Usuario;
 
 public class LoginResponse {
-    @SerializedName("usuario")
-    private Usuario user;
+
+    @SerializedName("response")
+    @Expose
+    private String response;
     @SerializedName("sessionToken")
+    @Expose
     private String sessionToken;
+    @SerializedName("usuario")
+    @Expose
+    private Usuario usuario;
 
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
     public LoginResponse() {
-        super();
     }
-    public  LoginResponse(Usuario user, String sessionToken) {
-        this.user = user;
-        this.sessionToken = sessionToken;
 
+    /**
+     * 
+     * @param response
+     * @param sessionToken
+     * @param usuario
+     */
+    public LoginResponse(String response, String sessionToken, Usuario usuario) {
+        super();
+        this.response = response;
+        this.sessionToken = sessionToken;
+        this.usuario = usuario;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 
     public String getSessionToken() {
         return sessionToken;
     }
 
-    public Usuario getUser() {
-        return user;
+    public void setSessionToken(String sessionToken) {
+        this.sessionToken = sessionToken;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }
