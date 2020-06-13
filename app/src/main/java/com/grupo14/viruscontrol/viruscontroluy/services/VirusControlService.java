@@ -21,5 +21,4 @@ public interface VirusControlService {
     @GET("ciudadano/visita/sintomas")
     Call<List<Sintoma>> getSintomas(@Header("Authorization") String sessionToken);
 
-
 }

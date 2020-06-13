@@ -66,32 +66,34 @@ public class SeleccionarPrestadorFragment extends Fragment {
 
         String sessionToken = Utility.getInstance().getSessionToken();
 
-        Call<List<Sintoma>> sintomasCall = ApiAdapter.getApiService().getSintomas(sessionToken);
-
-        sintomasCall.enqueue(new Callback<List<Sintoma>>() {
-            @Override
-            public void onResponse(Call<List<Sintoma>> call, Response<List<Sintoma>> response) {
-                if (!response.isSuccessful()) {
-                    Log.v("response", "Code " + response.code());
-                    return;
-                }
-
-                List<Sintoma> sintomas = response.body();
-
-                for (Sintoma sintoma : sintomas) {
-                    Log.v("sintoma",sintoma.getNombre());
-                    sintomasMap.put(sintoma.getNombre(),sintoma.getId());
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Sintoma>> call, Throwable t) {
-                Log.v("response", "fail " + t.getMessage());
-            }
-        });
-
+//        Call<List<Sintoma>> sintomasCall = ApiAdapter.getApiService().getSintomas(sessionToken);
+//
+//        sintomasCall.enqueue(new Callback<List<Sintoma>>() {
+//            @Override
+//            public void onResponse(Call<List<Sintoma>> call, Response<List<Sintoma>> response) {
+//                if (!response.isSuccessful()) {
+//                    Log.v("response", "Code " + response.code());
+//                    return;
+//                }
+//
+//                List<Sintoma> sintomas = response.body();
+//
+//                if (sintomas != null) {
+//                    for (Sintoma sintoma : sintomas) {
+//                        Log.v("sintoma",sintoma.getNombre());
+//                        sintomasMap.put(sintoma.getNombre(),sintoma.getId());
+//
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Sintoma>> call, Throwable t) {
+//                Log.v("response", "fail " + t.getMessage());
+//            }
+//        });
+//
 
         List<String> l = new ArrayList<String>(sintomasMap.keySet());
         Log.v("sintomasMap",sintomasMap.keySet().toString());

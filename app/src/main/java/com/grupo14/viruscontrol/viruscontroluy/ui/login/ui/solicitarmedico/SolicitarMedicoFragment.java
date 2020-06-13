@@ -22,11 +22,20 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.grupo14.viruscontrol.viruscontroluy.R;
+import com.grupo14.viruscontrol.viruscontroluy.modelos.Sintoma;
+import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.confirmardatos_solicitarmedico.ConfirmarDatosFragment;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.seleccionarprestador.SeleccionarPrestadorFragment;
+import com.grupo14.viruscontrol.viruscontroluy.utility.Utility;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SolicitarMedicoFragment extends Fragment {
 
@@ -35,7 +44,7 @@ public class SolicitarMedicoFragment extends Fragment {
     private Button btnAgregarSintoma;
     private Button btnSiguiente;
     //private EditText editTextSintoma;
-    private List<String> sintomasListFromBackend = new ArrayList<String>();
+
     private List<String> sintomasIngresadosSolicitarMedico = new ArrayList<String>();
     private ListView lvSintomasIngresadosSolicitarMedico;
     private Spinner spinnerSintomasSolicitarMedico;
@@ -49,16 +58,67 @@ public class SolicitarMedicoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        String sessionToken = Utility.getInstance().getSessionToken();
+        Map<String,Number> sintomasMap = new HashMap<>();
+
+
+        Call<List<Sintoma>> sintomasCall = ApiAdapter.getApiService().getSintomas(sessionToken);
+
+//        try
+//        {
+//            Response<List<Sintoma>> response = sintomasCall.execute();
+//            List<Sintoma> sintomasList = response.body();
+//            for (Sintoma sintoma : sintomasList) {
+//                Log.v("sintoma",sintoma.getNombre());
+//                sintomasMap.put(sintoma.getNombre(),sintoma.getId());
+//            }
+//            //API response
+//            System.out.println(sintomasList);
+//        }
+//        catch (Exception ex)
+//        {
+//            ex.printStackTrace();
+//        }
+
+        sintomasCall.enqueue(new Callback<List<Sintoma>>() {
+            @Override
+            public void onResponse(Call<List<Sintoma>> call, Response<List<Sintoma>> response) {
+                if (!response.isSuccessful()) {
+                    Log.v("response", "Code " + response.code());
+                    return;
+                }
+
+                List<Sintoma> sintomas = response.body();
+
+                if (sintomas != null) {
+                    for (Sintoma sintoma : sintomas) {
+                        Log.v("sintoma",sintoma.getNombre());
+                        sintomasMap.put(sintoma.getNombre(),sintoma.getId());
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Sintoma>> call, Throwable t) {
+                Log.v("response", "fail " + t.getMessage());
+            }
+        });
+
+
+
         solicitarMedicoViewModel =
                 ViewModelProviders.of(this).get(SolicitarMedicoViewModel.class);
 
         //TODO: Cargar sintomasListFromBackend desde el backend
-        //mienstras se cargar manualmente
-        sintomasListFromBackend.add("Sintoma 1");
-        sintomasListFromBackend.add("Sintoma 2");
-        sintomasListFromBackend.add("Sintoma 3");
-        sintomasListFromBackend.add("Sintoma 5");
-        sintomasListFromBackend.add("Sintoma 6");
+
+
+
+        List<String> sintomasListFromBackend = new ArrayList<String>(sintomasMap.keySet());
+        Log.v("sintomasMap",sintomasMap.keySet().toString());
+
 
         final View solicitarMedicoView = inflater.inflate(R.layout.fragment_solicitar_medico, container, false);
         solicitarMedicoViewModel.getSintomaList().observe(getViewLifecycleOwner(), new Observer<List<String>>() {

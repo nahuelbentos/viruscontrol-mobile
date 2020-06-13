@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                                             LoginResponse loginResponse = response.body();
                                             if (loginResponse != null) {
                                                 Utility.getInstance().setSessionToken(loginResponse.getSessionToken());
+                                                Utility.getInstance().setLoginResponse(loginResponse);
                                             }
 
                                         }

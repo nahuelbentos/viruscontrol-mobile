@@ -1,13 +1,19 @@
 package com.grupo14.viruscontrol.viruscontroluy.modelos;
 
-public class Sintoma {
-    private Integer id;
-    private String nombre;
-//    public Sintoma(){
-//        super();
-//    }
-    public Sintoma(Integer id1, String nombre){
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+public class Sintoma {
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("nombre")
+    @Expose
+    private String nombre;
+    public Sintoma(){
+    }
+    public Sintoma(Integer id1, String nombre){
+        super();
         this.id = id1;
         this.nombre = nombre;
     }
