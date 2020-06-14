@@ -27,6 +27,7 @@ public class SolicitarMedicoViewModel extends ViewModel {
         this.sintomasList = new MutableLiveData<>();
     }
 
+
     public void setSintomasList(List<String> sintomasList) {
 
         this.sintomasList.setValue(sintomasList);
