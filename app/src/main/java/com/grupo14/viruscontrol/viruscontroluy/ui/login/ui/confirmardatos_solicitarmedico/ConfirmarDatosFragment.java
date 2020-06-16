@@ -67,6 +67,7 @@ public class ConfirmarDatosFragment extends Fragment {
             public void onClick(View v) {
 
                 //TODO: Hacer POST para enviar los datos
+
                 Toast.makeText(getActivity(),"Visita confimada!", Toast.LENGTH_SHORT).show();
                 Fragment nuevoFragmento = new HomeFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

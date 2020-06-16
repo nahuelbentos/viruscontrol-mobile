@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -42,6 +43,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 import com.grupo14.viruscontrol.viruscontroluy.BuildConfig;
 import com.grupo14.viruscontrol.viruscontroluy.R;
+import com.grupo14.viruscontrol.viruscontroluy.modelos.Sintoma;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.Usuario;
 import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontrol.viruscontroluy.services.LoginRequest;
@@ -57,6 +59,7 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -162,12 +165,45 @@ public class LoginActivity extends AppCompatActivity {
 
                                     });
 
+
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         });
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Call<List<Sintoma>> sintomasCall = ApiAdapter.getApiService().getSintomas(Utility.getInstance().getSessionToken());
+
+
+                        sintomasCall.enqueue(new Callback<List<Sintoma>>() {
+                            @Override
+                            public void onResponse(Call<List<Sintoma>> call, Response<List<Sintoma>> response) {
+                                if (!response.isSuccessful()) {
+                                    Log.v("response", "Code " + response.code());
+                                    return;
+                                }
+
+                                List<Sintoma> sintomas = response.body();
+
+                                if (sintomas != null) {
+                                    Log.v("Sintomas on LoginActivity",sintomas.toString());
+                                    Utility.getInstance().setSintomaList(sintomas);
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Sintoma>> call, Throwable t) {
+                                Log.v("response", "fail " + t.getMessage());
+                            }
+                        });
+                    }
+                }, 2000);
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);

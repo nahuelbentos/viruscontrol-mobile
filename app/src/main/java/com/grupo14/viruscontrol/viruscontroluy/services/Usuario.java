@@ -4,7 +4,7 @@ package com.grupo14.viruscontrol.viruscontroluy.services;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Usuario {
+public class  Usuario {
 
     @SerializedName("apellido")
     @Expose
@@ -48,6 +48,9 @@ public class Usuario {
     @SerializedName("username")
     @Expose
     private String username;
+    @SerializedName("cedula")
+    @Expose
+    private String cedula;
 
     /**
      * No args constructor for use in serialization
@@ -73,7 +76,7 @@ public class Usuario {
      * @param primerIngreso
      * @param username
      */
-    public Usuario(String apellido, String correo, Boolean deleted, Object direccion, Object fechaNacimiento, Integer idUsuario, Object nacionalidad, String nombre, Object password, String photoUrl, Object prestadoraSalud, Boolean primerIngreso, String sessionToken, String username) {
+    public Usuario(String apellido, String correo, Boolean deleted, Object direccion, Object fechaNacimiento, Integer idUsuario, Object nacionalidad, String nombre, Object password, String photoUrl, Object prestadoraSalud, Boolean primerIngreso, String sessionToken, String username, String cedula) {
         super();
         this.apellido = apellido;
         this.correo = correo;
@@ -89,6 +92,7 @@ public class Usuario {
         this.primerIngreso = primerIngreso;
         this.sessionToken = sessionToken;
         this.username = username;
+        this.cedula = cedula;
     }
 
     public String getApellido() {
@@ -201,6 +205,14 @@ public class Usuario {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getCedula(){
+        return cedula;
+    }
+
+    public void setCedula(String cedula){
+        this.cedula = cedula;
     }
 
 }

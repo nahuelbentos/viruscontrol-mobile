@@ -50,7 +50,7 @@ public class MenuUsuarioCiudadano extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Wenas tardes", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Hola", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
