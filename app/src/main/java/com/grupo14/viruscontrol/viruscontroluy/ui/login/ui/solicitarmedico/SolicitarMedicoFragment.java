@@ -87,18 +87,14 @@ public class SolicitarMedicoFragment extends Fragment {
 
         //TODO: Cargar sintomasListFromBackend desde el backend
         //mienstras se cargar manualmente
-        sintomasListFromBackend.add("Sintoma 1");
-        sintomasListFromBackend.add("Sintoma 2");
-        sintomasListFromBackend.add("Sintoma 3");
-        sintomasListFromBackend.add("Sintoma 5");
-        sintomasListFromBackend.add("Sintoma 6");
+        List<Sintoma> lista = Utility.getInstance().getSintomaList();
+        for(Sintoma sintoma : lista){
+            sintomasListFromBackend.add(sintoma.getNombre());
+        }
 
-
-        solicitarMedicoViewModel.setSintomasList();
 
         final View solicitarMedicoView = inflater.inflate(R.layout.fragment_solicitar_medico, container, false);
         solicitarMedicoViewModel.getSintomaList().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
-
             @Override
             public void onChanged(List<String> strings) {
 

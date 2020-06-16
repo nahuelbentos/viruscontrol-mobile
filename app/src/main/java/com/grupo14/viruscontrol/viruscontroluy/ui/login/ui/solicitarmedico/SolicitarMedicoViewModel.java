@@ -22,6 +22,7 @@ import retrofit2.Response;
 public class SolicitarMedicoViewModel extends ViewModel {
 
     private MutableLiveData<List<String>> sintomasList;
+    Map<String,Number> sintomasMap = new HashMap<>();
 
     public SolicitarMedicoViewModel() {
         this.sintomasList = new MutableLiveData<>();
@@ -41,7 +42,6 @@ public class SolicitarMedicoViewModel extends ViewModel {
 
 
         String sessionToken = Utility.getInstance().getSessionToken();
-        Map<String,Number> sintomasMap = new HashMap<>();
 
 
         Call<List<Sintoma>> sintomasCall = ApiAdapter.getApiService().getSintomas(sessionToken);
@@ -73,8 +73,7 @@ public class SolicitarMedicoViewModel extends ViewModel {
             }
         });
 
-        List<String> listaAux = new ArrayList<>();
-        listaAux = (List<String>) sintomasMap.keySet();
+        List<String> listaAux = new ArrayList<>(sintomasMap.keySet());
 
         sintomasList.setValue(listaAux);
 
