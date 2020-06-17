@@ -44,13 +44,14 @@ import com.facebook.login.widget.LoginButton;
 import com.grupo14.viruscontrol.viruscontroluy.BuildConfig;
 import com.grupo14.viruscontrol.viruscontroluy.R;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.Sintoma;
-import com.grupo14.viruscontrol.viruscontroluy.modelos.Usuario;
 import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontrol.viruscontroluy.services.LoginRequest;
 import com.grupo14.viruscontrol.viruscontroluy.services.LoginResponse;
+import com.grupo14.viruscontrol.viruscontroluy.services.Usuario;
 import com.grupo14.viruscontrol.viruscontroluy.services.VirusControlService;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModel;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginViewModelFactory;
+import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.primerinicio.PrimerInicio;
 import com.grupo14.viruscontrol.viruscontroluy.utility.Utility;
 
 import org.json.JSONException;
@@ -154,6 +155,32 @@ public class LoginActivity extends AppCompatActivity {
                                             if (loginResponse != null) {
                                                 Utility.getInstance().setSessionToken(loginResponse.getSessionToken());
                                                 Utility.getInstance().setLoginResponse(loginResponse);
+
+                                                boolean primerIngreso = loginResponse.getUsuario().getPrimerIngreso();
+
+                                                Intent i;
+                                                if(primerIngreso){
+
+                                                    Log.v("PRIMERINGRESO = TRUE", "Usuario: " + loginResponse.getUsuario().getUsername());
+                                                    //Log.v("LoginResponse ::: Token ::: ", Utility.getInstance().getSessionToken());
+                                                    i = new Intent(LoginActivity.this, PrimerInicio.class);
+
+                                                    //Utility.getInstance().getLoginResponse().setUsuario(loggedUser);
+                                                    //pasar parametros al primer inicio activity
+                                                    i.putExtra("username", loginResponse.getUsuario().getUsername());
+                                                    //Log.v("LoginResponse ::: Token ::: ", Utility.getInstance().getSessionToken());.getUsername());
+                                                    i.putExtra("nombre", loginResponse.getUsuario().getNombre());
+                                                    i.putExtra("apellido", loginResponse.getUsuario().getApellido());
+                                                    i.putExtra("email", loginResponse.getUsuario().getCorreo());
+                                                    i.putExtra("token", Utility.getInstance().getSessionToken());
+                                                    startActivity(i);
+                                                }else{
+                                                    Log.v("PRIMERINGRESO = FLASE", "Usuario: " + loginResponse.getUsuario().getUsername());
+                                                    i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
+
+                                                    startActivity(i);
+                                                }
+
                                             }
 
                                         }

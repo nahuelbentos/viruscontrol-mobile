@@ -43,5 +43,16 @@
     <string name="seleccione_sintomas">Seleccione los sintomas</string>
     <string name="agregar">Agregar</string>
     <string name="confirmar_sintomas_ingresados">Confirmar sintomas ingresados</string>
+    <string name="primer_inicio">Primer Inicio</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="cedula">Cedula</string>
+    <string name="telefono">Telefono</string>
+    <string name="nacionalidad">Nacionalidad</string>
+    <string name="fecha_nacimiento">Fecha de nacimiento</string>
+    <string name="direccion">Direccion</string>
+    <string name="confirmar">Confirmar</string>
 
 </resources>

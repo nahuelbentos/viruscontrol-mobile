@@ -1,7 +1,6 @@
 package com.grupo14.viruscontrol.viruscontroluy.services;
 
 import com.grupo14.viruscontrol.viruscontroluy.modelos.Sintoma;
-import com.grupo14.viruscontrol.viruscontroluy.modelos.Usuario;
 
 import java.util.List;
 
@@ -12,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface VirusControlService {
 
@@ -25,4 +25,6 @@ public interface VirusControlService {
 //    @POST("ciudadano/visita/confirmar")
 //    Call<VisitaResponse> postSolicitarVisita(@Header("Authorization")String sessionToken, )
 
+    @PUT("/autenticacion/validar_datos")
+    Call<Usuario> putValidarDatos(@Body Usuario usuario);
 }
