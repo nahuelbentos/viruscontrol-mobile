@@ -142,19 +142,19 @@ public class PrimerInicio extends AppCompatActivity {
 //
 //                );
 
-                Call<Usuario> callBackendValidarDatos = ApiAdapter.getApiService().putValidarDatos(usuario);
-                callBackendValidarDatos.enqueue(new Callback<Usuario>() {
-                    @Override
-                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                        Toast.makeText(getApplicationContext(), "Code::: " + response.code(), Toast.LENGTH_SHORT).show();
-                        //Log.v("Code::: ", response.body().getNombre());
-                    }
-
-                    @Override
-                    public void onFailure(Call<Usuario> call, Throwable t) {
-
-                    }
-                });
+//                Call<Usuario> callBackendValidarDatos = ApiAdapter.getApiService().putValidarDatos(usuario);
+//                callBackendValidarDatos.enqueue(new Callback<Usuario>() {
+//                    @Override
+//                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+//                        Toast.makeText(getApplicationContext(), "Code::: " + response.code(), Toast.LENGTH_SHORT).show();
+//                        //Log.v("Code::: ", response.body().getNombre());
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Usuario> call, Throwable t) {
+//
+//                    }
+//                });
             }
         });
     }
