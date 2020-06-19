@@ -1,28 +1,21 @@
 package com.grupo14.viruscontrol.viruscontroluy.ui.login;
 
-import android.app.UiAutomation;
-import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
 import com.facebook.Profile;
-import com.facebook.ProfileManager;
 import com.facebook.ProfileTracker;
-import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.grupo14.viruscontrol.viruscontroluy.R;
-import com.grupo14.viruscontrol.viruscontroluy.data.model.LoggedInUser;
+import com.grupo14.viruscontrol.viruscontroluy.utility.Utility;
 
-import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -35,6 +28,7 @@ public class MenuUsuarioCiudadano extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvUsername;
+    private TextView emailNav;
     private String imageURL;
     ProfileTracker mProfileTracker;
     ProfilePictureView profilePictureView;
@@ -59,7 +53,7 @@ public class MenuUsuarioCiudadano extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,R.id.solicitar_medico, R.id.nav_gallery, R.id.nav_slideshow, R.id.cerrar_sesion_fragment)
+                R.id.nav_home,R.id.solicitar_medico, R.id.nav_reportes, R.id.nav_slideshow, R.id.cerrar_sesion_fragment)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -70,6 +64,7 @@ public class MenuUsuarioCiudadano extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         tvUsername = headerView.findViewById(R.id.usernameSideMenu);
         profilePictureView = headerView.findViewById((R.id.imageViewProfile));
+        emailNav = headerView.findViewById((R.id.emailNav));
 
         //System.out.println("TextView: " + tvUsername.getText());
         if(Profile.getCurrentProfile() == null) {
@@ -80,6 +75,8 @@ public class MenuUsuarioCiudadano extends AppCompatActivity {
                     mProfileTracker.stopTracking();
                     tvUsername.setText(Profile.getCurrentProfile().getName());
                     profilePictureView.setProfileId(Profile.getCurrentProfile().getId());
+                    if(Utility.getInstance().getLoginResponse() != null)
+                        emailNav.setText(Utility.getInstance().getLoginResponse().getUsuario().getCorreo());
                 }
             };
 
