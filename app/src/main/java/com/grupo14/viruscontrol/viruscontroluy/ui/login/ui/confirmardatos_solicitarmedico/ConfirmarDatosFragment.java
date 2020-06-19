@@ -103,7 +103,7 @@ public class ConfirmarDatosFragment extends Fragment {
                             Log.v("response", "Code " + response.code());
                             return;
                         }
-                        Toast.makeText(getActivity(), "Visita solicitada exitosamente. Médico: " + response.body().getMedicoNomApe(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Visita solicitada exitosamente", Toast.LENGTH_LONG).show();
                     }
 
                     @Override

@@ -48,8 +48,7 @@ public class  Usuario {
     @SerializedName("username")
     @Expose
     private String username;
-    @SerializedName("cedula")
-    @Expose
+
     private String cedula;
 
     /**
