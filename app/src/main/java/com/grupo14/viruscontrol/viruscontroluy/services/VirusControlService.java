@@ -21,8 +21,7 @@ public interface VirusControlService {
     @GET("ciudadano/visita/sintomas")
     Call<List<Sintoma>> getSintomas(@Header("Authorization") String sessionToken);
 
-//    @FormUrlEncoded
-//    @POST("ciudadano/visita/confirmar")
-//    Call<VisitaResponse> postSolicitarVisita(@Header("Authorization")String sessionToken, )
+    @POST("ciudadano/visita/confirmar")
+    Call<ConfirmarVisitaResponse> postSolicitarVisita(@Header("Authorization") String sessionToken, @Body List<Sintoma> sintomaList );
 
 }
