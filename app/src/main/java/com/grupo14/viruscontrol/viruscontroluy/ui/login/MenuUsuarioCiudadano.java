@@ -64,7 +64,6 @@ public class MenuUsuarioCiudadano extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         tvUsername = headerView.findViewById(R.id.usernameSideMenu);
         profilePictureView = headerView.findViewById((R.id.imageViewProfile));
-        emailNav = headerView.findViewById((R.id.emailNav));
 
         //System.out.println("TextView: " + tvUsername.getText());
         if(Profile.getCurrentProfile() == null) {
@@ -75,8 +74,6 @@ public class MenuUsuarioCiudadano extends AppCompatActivity {
                     mProfileTracker.stopTracking();
                     tvUsername.setText(Profile.getCurrentProfile().getName());
                     profilePictureView.setProfileId(Profile.getCurrentProfile().getId());
-                    if(Utility.getInstance().getLoginResponse() != null)
-                        emailNav.setText(Utility.getInstance().getLoginResponse().getUsuario().getCorreo());
                 }
             };
 
