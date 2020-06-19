@@ -173,6 +173,8 @@ public class LoginActivity extends AppCompatActivity {
                                                     i.putExtra("apellido", loginResponse.getUsuario().getApellido());
                                                     i.putExtra("email", loginResponse.getUsuario().getCorreo());
                                                     i.putExtra("token", Utility.getInstance().getSessionToken());
+                                                    i.putExtra("idUsuario", loginResponse.getUsuario().getIdUsuario().toString());
+                                                    //Log.v("LoginResponse ::: Password ::: ", loginResponse.getUsuario().getPassword().toString());
                                                     startActivity(i);
                                                 }else{
                                                     Log.v("PRIMERINGRESO = FLASE", "Usuario: " + loginResponse.getUsuario().getUsername());

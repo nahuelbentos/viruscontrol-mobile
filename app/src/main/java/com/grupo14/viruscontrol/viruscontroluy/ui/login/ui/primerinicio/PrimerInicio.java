@@ -80,11 +80,7 @@ public class PrimerInicio extends AppCompatActivity {
             etNombre.setText(datosUsuario.getString("nombre"));
             etApellido.setText(datosUsuario.getString("apellido"));
 
-            Utility.getInstance().getLoginResponse().getUsuario().setCedula(etCedula.getText().toString());
-            Utility.getInstance().getLoginResponse().getUsuario().setNacionalidad("Uruguay");
-            Utility.getInstance().getLoginResponse().getUsuario().setFechaNacimiento(mDisplayDate.getText().toString());
-            Utility.getInstance().getLoginResponse().getUsuario().setDireccion(etDireccion.getText().toString());
-            Utility.getInstance().getLoginResponse().getUsuario().setSessionToken(datosUsuario.getString("token"));
+
 
         }
 
@@ -129,32 +125,49 @@ public class PrimerInicio extends AppCompatActivity {
 
                 Intent i = new Intent(PrimerInicio.this, MenuUsuarioCiudadano.class);
                 Log.v("Usuario primer inicio::: ", Utility.getInstance().getLoginResponse().getUsuario().getUsername());
+                Utility.getInstance().getLoginResponse().getUsuario().setCedula(etCedula.getText().toString());
+                Utility.getInstance().getLoginResponse().getUsuario().setNacionalidad("Uruguay");
+                Utility.getInstance().getLoginResponse().getUsuario().setFechaNacimiento(mDisplayDate.getText().toString());
+                Utility.getInstance().getLoginResponse().getUsuario().setDireccion(etDireccion.getText().toString());
+                Utility.getInstance().getLoginResponse().getUsuario().setSessionToken(datosUsuario.getString("token"));
+                Utility.getInstance().getLoginResponse().getUsuario().setIdUsuario(Integer.parseInt(datosUsuario.getString("idUsuario")));
 
-                startActivity(i);
 
                 //TODO aqui hacer el PUT con el usuario logueado
-//                Usuario usuario = new Usuario(
-//                        etApellido.getText(),
-//                        etEmail.getText(),
-//                        false,
-//                        etDireccion.getText(),
-//                        etFechaNac.getText(),
-//
-//                );
+                Usuario usuario = new Usuario(
+                        etApellido.getText().toString(),
+                        etEmail.getText().toString(),
+                        false,
+                        etDireccion.getText(),
+                        mDisplayDate.getText(),
+                        Utility.getInstance().getLoginResponse().getUsuario().getIdUsuario(),
+                        "",
+                        etNombre.getText().toString(),
+                        "",
+                        "",
+                        null,
+                        true,
+                        Utility.getInstance().getLoginResponse().getUsuario().getSessionToken(),
+                        Utility.getInstance().getLoginResponse().getUsuario().getCorreo(),
+                        Utility.getInstance().getLoginResponse().getUsuario().getCedula()
 
-//                Call<Usuario> callBackendValidarDatos = ApiAdapter.getApiService().putValidarDatos(usuario);
-//                callBackendValidarDatos.enqueue(new Callback<Usuario>() {
-//                    @Override
-//                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-//                        Toast.makeText(getApplicationContext(), "Code::: " + response.code(), Toast.LENGTH_SHORT).show();
-//                        //Log.v("Code::: ", response.body().getNombre());
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Usuario> call, Throwable t) {
-//
-//                    }
-//                });
+                );
+
+                Call<Usuario> callBackendValidarDatos = ApiAdapter.getApiService().putValidarDatos(usuario);
+                callBackendValidarDatos.enqueue(new Callback<Usuario>() {
+                    @Override
+                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                        Toast.makeText(getApplicationContext(), "Code::: " + response.code(), Toast.LENGTH_SHORT).show();
+                        //Log.v("Code::: ", response.body().getNombre());
+                    }
+
+                    @Override
+                    public void onFailure(Call<Usuario> call, Throwable t) {
+
+                    }
+                });
+
+                startActivity(i);
             }
         });
     }
