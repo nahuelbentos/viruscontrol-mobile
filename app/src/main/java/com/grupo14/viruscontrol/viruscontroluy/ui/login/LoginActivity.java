@@ -39,9 +39,10 @@ import com.facebook.GraphResponse;
 import com.facebook.LoggingBehavior;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.BuildConfig;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
-import com.grupo14.viruscontrol.viruscontroluy.BuildConfig;
+//import com.grupo14.viruscontrol.viruscontroluy.BuildConfig;
 import com.grupo14.viruscontrol.viruscontroluy.R;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.Sintoma;
 import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
@@ -78,7 +79,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+//        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        boolean isLoggedIn = true;
         if(isLoggedIn){
             Intent i = new Intent(LoginActivity.this, MenuUsuarioCiudadano.class);
             startActivity(i);
