@@ -1,4 +1,4 @@
-package com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.gallery;
+package com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.reportesUbicacion;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.grupo14.viruscontrol.viruscontroluy.R;
 import com.grupo14.viruscontrol.viruscontroluy.R;
 
 public class GalleryFragment extends Fragment {

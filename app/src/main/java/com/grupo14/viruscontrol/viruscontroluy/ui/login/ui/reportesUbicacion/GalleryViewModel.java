@@ -1,4 +1,4 @@
-package com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.gallery;
+package com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.reportesUbicacion;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
