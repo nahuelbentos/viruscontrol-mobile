@@ -25,5 +25,5 @@ public interface VirusControlService {
     Call<ConfirmarVisitaResponse> postSolicitarVisita(@Header("Authorization") String sessionToken, @Body List<Sintoma> sintomaList );
 
     @PUT("/autenticacion/validar_datos")
-    Call<Usuario> putValidarDatos(@Body Usuario usuario);
+    Call<String> putValidarDatos(@Header("Authorization") String sessionToken, @Body Usuario usuario);
 }

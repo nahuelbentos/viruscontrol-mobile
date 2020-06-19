@@ -16,12 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.grupo14.viruscontrol.viruscontroluy.R;
-import com.grupo14.viruscontrol.viruscontroluy.modelos.Medico;
-import com.grupo14.viruscontrol.viruscontroluy.modelos.PrestadoraSalud;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.Sintoma;
 import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontrol.viruscontroluy.services.ConfirmarVisitaResponse;
@@ -103,7 +100,7 @@ public class ConfirmarDatosFragment extends Fragment {
                             Log.v("response", "Code " + response.code());
                             return;
                         }
-                        Toast.makeText(getActivity(), "Visita solicitada exitosamente. Médico: " + response.body().getMedicoNomApe(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Visita solicitada exitosamente." , Toast.LENGTH_LONG).show();
                     }
 
                     @Override
