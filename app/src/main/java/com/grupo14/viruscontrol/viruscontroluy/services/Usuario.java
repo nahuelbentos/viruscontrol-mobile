@@ -12,8 +12,6 @@ public class  Usuario {
     @SerializedName("correo")
     @Expose
     private String correo;
-    @SerializedName("deleted")
-    @Expose
     private Boolean deleted;
     @SerializedName("direccion")
     @Expose
@@ -30,26 +28,17 @@ public class  Usuario {
     @SerializedName("nombre")
     @Expose
     private String nombre;
-    @SerializedName("password")
-    @Expose
     private Object password;
-    @SerializedName("photoUrl")
-    @Expose
     private String photoUrl;
-    @SerializedName("prestadoraSalud")
-    @Expose
     private Object prestadoraSalud;
     @SerializedName("primerIngreso")
     @Expose
     private Boolean primerIngreso;
-    @SerializedName("sessionToken")
-    @Expose
     private String sessionToken;
     @SerializedName("username")
     @Expose
     private String username;
-    @SerializedName("cedula")
-    @Expose
+
     private String cedula;
 
     /**

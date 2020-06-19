@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     String FEmail = object.getString("email");
                                     Log.v("Email = ", " " + FEmail);
-                                    Toast.makeText(getApplicationContext(), "Name " + Name, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Bienvenido " + Name, Toast.LENGTH_LONG).show();
 
                                     String[] splited = Name.split("\\s+");
                                     LoginRequest loginRequest = new LoginRequest(splited[0],splited[1],FEmail,FEmail);
