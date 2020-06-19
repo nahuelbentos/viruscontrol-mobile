@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,20 @@ import android.widget.Toast;
 import com.grupo14.viruscontrol.viruscontroluy.R;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.Medico;
 import com.grupo14.viruscontrol.viruscontroluy.modelos.PrestadoraSalud;
+import com.grupo14.viruscontrol.viruscontroluy.modelos.Sintoma;
+import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
+import com.grupo14.viruscontrol.viruscontroluy.services.ConfirmarVisitaResponse;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.home.HomeFragment;
+import com.grupo14.viruscontrol.viruscontroluy.utility.Utility;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ConfirmarDatosFragment extends Fragment {
 
@@ -67,8 +79,40 @@ public class ConfirmarDatosFragment extends Fragment {
             public void onClick(View v) {
 
                 //TODO: Hacer POST para enviar los datos
+                Map<String,Integer> mapSintomas = new HashMap<>();
+                List<Sintoma> sintomasSeleccionados = new ArrayList<>();
+                List<Sintoma> sintomasBackend = Utility.getInstance().getSintomaList();
+                for(Sintoma sintoma : sintomasBackend){
+                    mapSintomas.put(sintoma.getNombre(),sintoma.getId());
+                }
 
-                Toast.makeText(getActivity(),"Visita confimada!", Toast.LENGTH_SHORT).show();
+                for(String nombreSintoma : sintomasList){
+                    if(mapSintomas.containsKey(nombreSintoma)){
+                        Sintoma s = new Sintoma(mapSintomas.get(nombreSintoma), nombreSintoma);
+                        sintomasSeleccionados.add(s);
+                    }
+                }
+
+
+                Call<ConfirmarVisitaResponse> callSolicitarMedico = ApiAdapter.getApiService().postSolicitarVisita(Utility.getInstance().getSessionToken(),sintomasSeleccionados);
+                callSolicitarMedico.enqueue(new Callback<ConfirmarVisitaResponse>(){
+
+                    @Override
+                    public void onResponse(Call<ConfirmarVisitaResponse> call, Response<ConfirmarVisitaResponse> response) {
+                        if (!response.isSuccessful()) {
+                            Log.v("response", "Code " + response.code());
+                            return;
+                        }
+                        Toast.makeText(getActivity(), "Visita solicitada exitosamente. Médico: " + response.body().getMedicoNomApe(), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ConfirmarVisitaResponse> call, Throwable t) {
+                        Log.v("response", "fail " + t.getMessage());
+
+                    }
+                });
+
                 Fragment nuevoFragmento = new HomeFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nuevoFragmento);
