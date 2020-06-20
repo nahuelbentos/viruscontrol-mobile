@@ -26,4 +26,7 @@ public interface VirusControlService {
 
     @PUT("/autenticacion/validar_datos")
     Call<String> putValidarDatos(@Header("Authorization") String sessionToken, @Body Usuario usuario);
+
+    @POST("ciudadano/ubicacion/reportar")
+    Call<ReportarUbicacion> postReportarUbicacion(@Header("Authorization") String sessionToken, @Body ReportarUbicacion ubicacion);
 }
