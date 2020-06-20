@@ -5,16 +5,24 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.facebook.FacebookActivity;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.grupo14.viruscontrol.viruscontroluy.R;
+import com.grupo14.viruscontrol.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.LoginActivity;
 import com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.home.HomeFragment;
+import com.grupo14.viruscontrol.viruscontroluy.utility.Utility;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +73,26 @@ public class CerrarSesionFragment extends Fragment {
 
         LoginManager.getInstance().logOut();
         Intent i = new Intent(getActivity(), LoginActivity.class);
+        String accessToken = Utility.getInstance().getSessionToken();
+        Log.v("LogoutBackend ::: accessToken", "Code " + Utility.getInstance().getSessionToken());
+
+        Call<String> logoutBackend = ApiAdapter.getApiService().logoutBackend(accessToken);
+        logoutBackend.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(!response.isSuccessful()){
+                    Log.v("LogoutBackend ::: response", "Code " + response.code());
+                }
+                Toast.makeText(getActivity(), "Se cierra sesion " , Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                //Toast.makeText(getActivity(), "LogoutBackend - Fail ::: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.v("LogoutBackend ::: Fail", "Code " + t.getMessage());
+            }
+        });
+
         startActivity(i);
     }
 

@@ -137,23 +137,43 @@ public class PrimerInicio extends AppCompatActivity {
 
 
                 //TODO aqui hacer el PUT con el usuario logueado
+                Usuario loggedUser = new Usuario();
+                loggedUser.setUsername(datosUsuario.getString("email"));
+                loggedUser.setNombre(datosUsuario.getString("nombre"));
+                loggedUser.setApellido(datosUsuario.getString("apellido"));
+                loggedUser.setCorreo(datosUsuario.getString("email"));
+                loggedUser.setNacionalidad("Uruguay");
+                loggedUser.setDireccion(etDireccion.getText().toString());
+                loggedUser.setCedula(etCedula.getText().toString());
 
 
-
-                Call<String> callBackendValidarDatos = ApiAdapter.getApiService().putValidarDatos(Utility.getInstance().getSessionToken(), Utility.getInstance().getLoginResponse().getUsuario());
+                Call<String> callBackendValidarDatos = ApiAdapter.getApiService().putValidarDatos(loggedUser);
                 callBackendValidarDatos.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (!response.isSuccessful()) {
                             Log.v("response", "Code " + response.code());
+                            Log.v("response", "Body " + response.body());
+                            Log.v("response", "toString  " + response.toString());
+                            Log.v("response", "message " + response.message());
+                            Log.v("response", "errorBody " + response.errorBody());
+                            Log.v("response", "headers " + response.headers());
+                            Log.v("response", "raw " + response.raw());
+
+                            Toast.makeText(getApplicationContext(), "ERROR - code " + response.code(), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Toast.makeText(getApplicationContext(), "Datos actualizados exitosamente " , Toast.LENGTH_SHORT).show();
+                        else{
+                            Toast.makeText(getApplicationContext(), "Datos actualizados exitosamente " , Toast.LENGTH_SHORT).show();
+                            Log.v("Response ", "Datos actualizados exitosamente ");
+                        }
+
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
+                        Toast.makeText(getApplicationContext(), "Login Fail " + t.getMessage() , Toast.LENGTH_SHORT).show();
+                        Log.v("Response fail ", t.getMessage());
                     }
                 });
 

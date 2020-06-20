@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -26,4 +27,10 @@ public interface VirusControlService {
 
     @PUT("autenticacion/validar_datos")
     Call<String> putValidarDatos(@Header("Authorization") String sessionToken, @Body Usuario usuario);
+
+    @PUT("autenticacion/validar_datos")
+    Call<String> putValidarDatos(@Body Usuario usuario);
+
+    @DELETE("autenticacion/salir")
+    Call<String> logoutBackend(@Header("Authorization") String accessToken);
 }
