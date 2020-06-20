@@ -7,57 +7,35 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.home.HomeFragment"
-        android:label="@string/viruscontrol_uy"
-        tools:layout="@layout/fragment_home">
+        android:name="com.grupo14.viruscontroluy.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
 
-        <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
-    </fragment>
+
     <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
+        android:id="@+id/solicitar_medico"
+        android:name="com.grupo14.viruscontroluy.ui.solicitarmedico.SolicitarMedicoFragment"
+        android:label="Solicitar médico a domicilio"
+        tools:layout="@layout/fragment_solicitar_medico" />
 
-        <argument
-            android:name="myArg"
-            app:argType="string" />
-    </fragment>
 
     <activity
         android:id="@+id/nav_reportes"
-        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.reportesUbicacion.ReportarUbicacionActivity"
+        android:name="com.grupo14.viruscontroluy.ui.reportesUbicacion.ReportarUbicacionActivity"
+        android:label="Reportar ubicacion"
+        tools:layout="@layout/activity_reportar_ubicacion" />
 
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-<!--        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.reportesUbicacion.GalleryFragment"-->
-<!--    <fragment-->
-<!--        android:id="@+id/nav_reportes"-->
-<!--        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.reportesUbicacion."-->
-<!--        -->
-<!--        android:label="@string/menu_gallery"-->
-<!--        tools:layout="@layout/fragment_gallery" />-->
+    <activity
+        android:id="@+id/nav_Cerrar_Sesion"
+        android:name="com.grupo14.viruscontroluy.ui.cerrarsesion.CerrarSesionActivity"
+        android:label="Cerrar sesión"
+        tools:layout="@layout/activity_cerrar_sesion" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/solicitar_medico"
-        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.solicitarmedico.SolicitarMedicoFragment"
-        android:label="@string/solicitar_medico_domicilio"
-        tools:layout="@layout/fragment_solicitar_medico" />
+
     <fragment
         android:id="@+id/cerrar_sesion_fragment"
-        android:name="com.grupo14.viruscontrol.viruscontroluy.ui.login.ui.cerrarsesion.CerrarSesionFragment"
-        android:label="@string/cerrar_sesion"
+        android:name="com.grupo14.viruscontroluy.ui.cerrarsesion.CerrarSesionFragment"
+        android:label="Cerrar sesión"
         tools:layout="@layout/fragment_cerrar_sesion" />
-
 
 </navigation>

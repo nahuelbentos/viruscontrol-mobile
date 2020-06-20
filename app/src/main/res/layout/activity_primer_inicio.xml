@@ -1,176 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ui.login.ui.primerinicio.PrimerInicioSesion">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.primerinicio.PrimerInicioActivity">
+
+    <include layout="@layout/action_bar_toolbar"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            >
+
+
+
+
+            <!-- Lista de campos:
+
+        Fotito:
+        Usuario:
+        Email:
+        Nombre:
+        Apellido:
+        CI:
+        Telefono:
+        Direccion:
+
+    -->
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <!--        <ImageView-->
+                <!--            android:layout_marginTop="10dp"-->
+                <!--            android:layout_width="35dp"-->
+                <!--            android:layout_height="35dp"-->
+                <!--            android:src="@drawable/icon_email"-->
+                <!--            ></ImageView>-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInpuUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Usuario"
+                        android:inputType="textEmailAddress">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <!--            <ImageView-->
+                <!--                android:layout_marginTop="10dp"-->
+                <!--                android:layout_width="35dp"-->
+                <!--                android:layout_height="35dp"-->
+                <!--                android:src="@drawable/icon_email"-->
+                <!--                ></ImageView>-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Correo electronico"
+                        android:inputType="textEmailAddress">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <!--            <ImageView-->
+                <!--                android:layout_marginTop="10dp"-->
+                <!--                android:layout_width="35dp"-->
+                <!--                android:layout_height="35dp"-->
+                <!--                android:src="@drawable/icon_email"-->
+                <!--                ></ImageView>-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombre"
+                        android:inputType="textEmailAddress">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <!--            <ImageView-->
+                <!--                android:layout_marginTop="10dp"-->
+                <!--                android:layout_width="35dp"-->
+                <!--                android:layout_height="35dp"-->
+                <!--                android:src="@drawable/icon_email"-->
+                <!--                ></ImageView>-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputApellido"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Apellido"
+                        android:inputType="textEmailAddress">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <!--            <ImageView-->
+                <!--                android:layout_marginTop="10dp"-->
+                <!--                android:layout_width="35dp"-->
+                <!--                android:layout_height="35dp"-->
+                <!--                android:src="@drawable/icon_email"-->
+                <!--                ></ImageView>-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputCedulaIdentidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Cédula de Identidad"
+                        android:inputType="textEmailAddress">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <!--            <ImageView-->
+                <!--                android:layout_marginTop="10dp"-->
+                <!--                android:layout_width="35dp"-->
+                <!--                android:layout_height="35dp"-->
+                <!--                android:src="@drawable/icon_email"-->
+                <!--                ></ImageView>-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Télefono"
+                        android:inputType="textEmailAddress">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <!--            <ImageView-->
+                <!--                android:layout_marginTop="10dp"-->
+                <!--                android:layout_width="35dp"-->
+                <!--                android:layout_height="35dp"-->
+                <!--                android:src="@drawable/icon_email"-->
+                <!--                ></ImageView>-->
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputDireccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Dirección"
+                        android:inputType="textEmailAddress">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:layout_margin="20dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:id="@+id/btnConfirmarDatos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Aceptar"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/colorWhite"></Button>
 
-            <TextView
-                android:id="@+id/tvPrimerInicio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/primer_inicio"
-                android:textSize="@dimen/tam_25"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_below="@+id/tvPrimerInicio"
-                android:id="@+id/hlSintomas1"/>
-            <TextView
-                android:id="@+id/labelUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/etUsuarioPrimerInicio"
-                android:text="@string/username"
-                android:layout_below="@+id/hlSintomas1"/>
-            <EditText
-                android:id="@+id/etUsuarioPrimerInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/labelUsuario"
-                android:textSize="@dimen/tam_20"/>
-
-            <TextView
-                android:id="@+id/labelEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/evEmailPrimerInicio"
-                android:text="@string/email"
-                android:layout_below="@+id/etUsuarioPrimerInicio"/>
-            <EditText
-                android:id="@+id/etEmailPrimerInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/labelEmail"
-                android:textSize="@dimen/tam_20"/>
-
-            <TextView
-                android:id="@+id/labelNombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/etEmailPrimerInicio"
-                android:text="@string/nombre"
-                android:layout_below="@+id/etEmailPrimerInicio"/>
-            <EditText
-                android:id="@+id/etNombrePrimerInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/labelNombre"
-                android:textSize="@dimen/tam_20"/>
-            <TextView
-                android:id="@+id/labelApellido"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/etApellidoPrimerInicio"
-                android:text="@string/apellido"
-                android:layout_below="@+id/etNombrePrimerInicio"/>
-            <EditText
-                android:id="@+id/etApellidoPrimerInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/labelApellido"
-                android:textSize="@dimen/tam_20"/>
-
-            <TextView
-                android:id="@+id/labelCedula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/evCedulaPrimerInicio"
-                android:text="@string/cedula"
-                android:layout_below="@+id/etApellidoPrimerInicio"/>
-            <EditText
-                android:id="@+id/etCedulaPrimerInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/labelCedula"
-                android:textSize="@dimen/tam_20"/>
-
-            <TextView
-                android:id="@+id/labelTelefono"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/etTelefonoPrimerInicio"
-                android:text="@string/telefono"
-                android:layout_below="@+id/etCedulaPrimerInicio"/>
-            <EditText
-                android:id="@+id/etTelefonoPrimerInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/labelTelefono"
-                android:textSize="@dimen/tam_20"/>
-
-            <TextView
-                android:id="@+id/labelNacionalidad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/spinnerNacionalidadPrimerInicio"
-                android:text="@string/nacionalidad"
-                android:layout_below="@+id/etTelefonoPrimerInicio"/>
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/labelNacionalidad"
-                android:id="@+id/spinnerNacionalidadPrimerInicio"/>
-
-            <TextView
-                android:id="@+id/labelFechaNacimiento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/tvFechaNacimientoPrimerInicio"
-                android:text="@string/fecha_nacimiento"
-                android:layout_below="@+id/spinnerNacionalidadPrimerInicio"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/labelFechaNacimiento"
-                android:id="@+id/tvFechaNacimientoPrimerInicio"
-                android:text="@string/fecha_nacimiento"
-                android:textSize="@dimen/tam_20"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/labelDireccion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/etDireccionPrimerInicio"
-                android:text="@string/direccion"
-                android:layout_below="@+id/tvFechaNacimientoPrimerInicio"/>
-            <EditText
-                android:id="@+id/etDireccionPrimerInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/labelDireccion"
-                android:textSize="@dimen/tam_20"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                android:layout_below="@+id/etDireccionPrimerInicio"
-                android:id="@+id/hlSintomas2"/>
-            <Button
-                android:id="@+id/btnConfirmarPirmerInicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/hlSintomas2"
-                android:text="@string/confirmar"/>
-        </RelativeLayout>
-
+        <Button
+            android:id="@+id/btnCancelarDatos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancelar"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/colorWhite"></Button>
     </LinearLayout>
 
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

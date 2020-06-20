@@ -1,58 +1,18 @@
 <resources>
-    <string name="app_name">Viruscontrol.uy</string>
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Iniciar sesion</string>
-    <string name="action_sign_in_short">Iniciar sesion</string>
-    <string name="welcome">"Bienvenido! "</string>
-    <string name="invalid_username">Usuario invalido</string>
-    <string name="invalid_password">Password mayor de 5 caracteres</string>
-    <string name="login_failed">"Fallo inicio de sesion"</string>
-    <string name="title_activity_menu_usuario_ciudadano">MenuUsuarioCiudadano</string>
+    <string name="app_name">VirusControlUy</string>
+
+    <string name="facebook_application_id">2880596572038563</string>
+    <string name="facebook_login_protocol_scheme">fb2880596572038563</string>
+    <string name="title_activity_menu">MenuActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Menu principal</string>
-    <string name="nav_header_subtitle">viruscontroluy@gmail.com</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Reportes de ubicación</string>
-    <string name="menu_slideshow">Prueba</string>
-
-    <string name="home_second">Home Second</string>
-
-    <string name="solicitar_medico_domicilio">Solicitar médico a domicilio</string>
-    <string name="cerrar_sesion">Cerrar sesion</string>
-    <string name="ingrese_sintoma">Ingrese síntomas</string>
-    <string name="agregar_sintonma">Agregar síntoma</string>
-    <string name="siguiente">Siguiente</string>
-    <string name="seleccionar_prestador_salud">Seleccionar prestador de salud</string>
-    <string name="sintomas_ingresados_solicitar_medico">Síntomas ingresados</string>
-    <string name="confimar_datos_solicitar_medico">"Confirmar datos "</string>
-    <string name="prestadora_salud">"Prestadora de salud: "</string>
-    <string name="medico_asignado">"Medico asignado: "</string>
-    <string name="confirmar_visita">Confirmar Visita</string>
-    <string name="viruscontrol_uy">Viruscontrol.uy</string>
-
-    <string name="facebook_app_id">281528729706150</string>
-    <string name="fb_login_protocol_scheme">fb281528729706150</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="seleccione_sintomas">Seleccione los sintomas</string>
-    <string name="agregar">Agregar</string>
-    <string name="confirmar_sintomas_ingresados">Confirmar sintomas ingresados</string>
-    <string name="primer_inicio">Primer Inicio</string>
-    <string name="username">Username</string>
-    <string name="email">Email</string>
-    <string name="nombre">Nombre</string>
-    <string name="apellido">Apellido</string>
-    <string name="cedula">Cedula</string>
-    <string name="telefono">Telefono</string>
-    <string name="nacionalidad">Nacionalidad</string>
-    <string name="fecha_nacimiento">Fecha de nacimiento</string>
-    <string name="direccion">Direccion</string>
-    <string name="confirmar">Confirmar</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>

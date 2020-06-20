@@ -1,2 +1,2 @@
-rootProject.name='viruscontrol.uy'
 include ':app'
+rootProject.name = "VirusControlUy"

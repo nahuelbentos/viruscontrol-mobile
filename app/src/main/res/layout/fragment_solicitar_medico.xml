@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.ui.solicitarmedico.SolicitarMedicoFragment"
+    tools:context=".ui.solicitarmedico.SolicitarMedicoFragment"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -14,8 +14,8 @@
         android:id="@+id/tvSeleccionarSintomas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/seleccione_sintomas"
-        android:textSize="@dimen/tam_25"/>
+        android:text="Seleccione los sintomas"
+        android:textSize="25dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -36,13 +36,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/hlSintomas"
-        android:text="@string/agregar"
+        android:text="Agregar"
         android:layout_alignParentRight="true"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnSiguienteSolicitarMedico"
-        android:text="@string/siguiente"
+        android:text="Siguiente"
         android:layout_below="@+id/btnAgregarSintoma"/>
 
     <ListView

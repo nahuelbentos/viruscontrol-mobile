@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "339927537433",
+    "firebase_url": "https://virus-control-uy-gr14.firebaseio.com",
+    "project_id": "virus-control-uy-gr14",
+    "storage_bucket": "virus-control-uy-gr14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339927537433:android:3ab2c0af6cda4af5369788",
+        "android_client_info": {
+          "package_name": "com.grupo14.viruscontroluy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339927537433-vgerv7d4l67lhrfqa7gtn2jb657rc980.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupo14.viruscontroluy",
+            "certificate_hash": "decd9d8941b165b6e3e1e90caa9dd032c262afe5"
+          }
+        },
+        {
+          "client_id": "339927537433-12t160s65ikki52n4evjosbasdubmrk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJIkCyq8Tu0fxtgMWm_YtIsbwhnLsdgzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339927537433-12t160s65ikki52n4evjosbasdubmrk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339927537433:android:c848046c78190c88369788",
+        "android_client_info": {
+          "package_name": "com.virus_control_uy.gr14"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339927537433-kjbeq107nn70ar677lo6ncgu5hajv7oe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.virus_control_uy.gr14",
+            "certificate_hash": "decd9d8941b165b6e3e1e90caa9dd032c262afe5"
+          }
+        },
+        {
+          "client_id": "339927537433-12t160s65ikki52n4evjosbasdubmrk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJIkCyq8Tu0fxtgMWm_YtIsbwhnLsdgzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339927537433-12t160s65ikki52n4evjosbasdubmrk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
