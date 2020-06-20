@@ -15,8 +15,8 @@ public class ConfirmarVisitaResponse {
     @SerializedName("medicoNomApe")
     @Expose
     private String medicoNomApe;
-    @SerializedName("fecha")
     @Expose
+    @SerializedName("fecha")
     private String fecha;
 
     /**

@@ -33,4 +33,7 @@ public interface VirusControlService {
 
     @DELETE("autenticacion/salir")
     Call<String> logoutBackend(@Header("Authorization") String accessToken);
+
+    @POST("ciudadano/ubicacion/reportar")
+    Call<ReportarUbicacion> postReportarUbicacion(@Header("Authorization") String sessionToken, @Body ReportarUbicacion ubicacion);
 }
