@@ -13,6 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Servicio para que funcione el envio de notificaciones -->
+        <service android:name=".services.MyFirebaseMessagingClient">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- Con este tag podemos recibir las acciones de las notificaciones -->
+        <receiver
+            android:name=".receivers.AcceptReceiver"
+            android:enabled="true" />
+        <receiver
+            android:name=".receivers.CancelReceiver"
+            android:enabled="true" />
+
+
+
         <activity android:name=".ui.cerrarsesion.CerrarSesionActivity"></activity>
         <activity android:name=".ui.primerinicio.PrimerInicioActivity" />
         <activity android:name=".ui.reportesUbicacion.ReportarUbicacionActivity" />

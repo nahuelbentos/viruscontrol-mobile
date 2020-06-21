@@ -17,8 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.grupo14.viruscontroluy.modelos.AuthResponse;
 import com.grupo14.viruscontroluy.modelos.Sintoma;
+import com.grupo14.viruscontroluy.modelos.Usuario;
 import com.grupo14.viruscontroluy.providers.LoginBackendProvider;
 import com.grupo14.viruscontroluy.modelos.LoginResponse;
+import com.grupo14.viruscontroluy.providers.UsuarioProvider;
 import com.grupo14.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontroluy.utility.Utility;
 
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             new AuthUI.IdpConfig.GoogleBuilder().build()
     );
     private LoginBackendProvider mLoginBackendProvider;
+    private UsuarioProvider mUsuarioProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,53 +84,73 @@ public class MainActivity extends AppCompatActivity {
                                     Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
                                     Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
 
-                                    Call<List<Sintoma>> sintomasCall = ApiAdapter.getApiService().getSintomas(response.body().getSessionToken());
-
-
-                                    sintomasCall.enqueue(new Callback<List<Sintoma>>() {
+                                    // Creo el usuario en Firebase.
+                                    Usuario usuario = response.body().getUsuario();
+                                    usuario.setUIdFirebase(user.getUid());
+                                    mUsuarioProvider = new UsuarioProvider();
+                                    mUsuarioProvider.create(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
-                                        public void onResponse(Call<List<Sintoma>> call, Response<List<Sintoma>> response) {
-                                            if (!response.isSuccessful()) {
-                                                Log.v("response", "Code " + response.code());
-                                                return;
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                            if (task.isSuccessful()) {
+                                                Call<List<Sintoma>> sintomasCall = ApiAdapter.getApiService().getSintomas(response.body().getSessionToken());
+
+
+                                                sintomasCall.enqueue(new Callback<List<Sintoma>>() {
+                                                    @Override
+                                                    public void onResponse(Call<List<Sintoma>> call, Response<List<Sintoma>> response) {
+                                                        if (!response.isSuccessful()) {
+                                                            Log.v("response", "Code " + response.code());
+                                                            return;
+                                                        }
+
+                                                        List<Sintoma> sintomas = response.body();
+
+                                                        if (sintomas != null) {
+                                                            Log.v("Sintomas", "Sintomas on LoginActivity" + sintomas.toString());
+                                                            Utility.getInstance().setSintomaList(sintomas);
+                                                        }
+
+
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<List<Sintoma>> call, Throwable t) {
+                                                        Log.v("response", "fail " + t.getMessage());
+                                                    }
+                                                });
+
+                                                Utility.getInstance().setSessionToken(response.body().getSessionToken());
+                                                Utility.getInstance().setLoginResponse(response.body());
+
+
+                                                boolean primerIngreso = response.body().getUsuario().getPrimerIngreso();
+
+                                                Intent intent;
+                                                if (response.body().getResponse().equals(AuthResponse.PRIMERINGRESO)) {
+
+                                                    Toast.makeText(MainActivity.this, "Voy al primer inicio", Toast.LENGTH_SHORT).show();
+                                                    //                                    intent = new Intent(MainActivity.this, PrimerInicioActivity.class);
+                                                    //                                    startActivity(intent);
+
+                                                } else {
+                                                    intent = new Intent(MainActivity.this, MenuActivity.class);
+
+                                                    startActivity(intent);
+                                                }
+
+                                                Toast.makeText(MainActivity.this, "El login fue exitoso", Toast.LENGTH_SHORT).show();
+
+                                            } else {
+                                                Log.d("errorRegister", "onComplete: task: " + task.toString());
+                                                Log.d("errorRegister", "onComplete: getResult: " + task.getResult().toString());
+                                                Log.d("errorRegister", "onComplete: getMessage: " + task.getException().getMessage());
+                                                Toast.makeText(MainActivity.this, "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
                                             }
 
-                                            List<Sintoma> sintomas = response.body();
-
-                                            if (sintomas != null) {
-                                                Log.v("Sintomas", "Sintomas on LoginActivity"+ sintomas.toString());
-                                                Utility.getInstance().setSintomaList(sintomas);
-                                            }
-
-
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<List<Sintoma>> call, Throwable t) {
-                                            Log.v("response", "fail " + t.getMessage());
                                         }
                                     });
 
-                                    Utility.getInstance().setSessionToken(response.body().getSessionToken());
-                                    Utility.getInstance().setLoginResponse(response.body());
-
-
-                                    boolean primerIngreso = response.body().getUsuario().getPrimerIngreso();
-
-                                    Intent intent;
-                                    if (response.body().getResponse().equals(AuthResponse.PRIMERINGRESO)) {
-
-                                        Toast.makeText(MainActivity.this, "Voy al primer inicio", Toast.LENGTH_SHORT).show();
-                                        //                                    intent = new Intent(MainActivity.this, PrimerInicioActivity.class);
-                                        //                                    startActivity(intent);
-
-                                    } else {
-                                        intent = new Intent(MainActivity.this, MenuActivity.class);
-
-                                        startActivity(intent);
-                                    }
-
-                                    Toast.makeText(MainActivity.this, "El login fue exitoso", Toast.LENGTH_SHORT).show();
 
                                 } else {
                                     Toast.makeText(MainActivity.this, "El login no fue exitoso", Toast.LENGTH_SHORT).show();

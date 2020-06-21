@@ -40,6 +40,7 @@ public class Usuario {
     private String username;
 
     private String cedula;
+    private String UIdFirebase;
 
     /**
      * No args constructor for use in serialization
@@ -82,6 +83,14 @@ public class Usuario {
         this.sessionToken = sessionToken;
         this.username = username;
         this.cedula = cedula;
+    }
+
+    public String getUIdFirebase() {
+        return UIdFirebase;
+    }
+
+    public void setUIdFirebase(String UIdFirebase) {
+        this.UIdFirebase = UIdFirebase;
     }
 
     public String getApellido() {

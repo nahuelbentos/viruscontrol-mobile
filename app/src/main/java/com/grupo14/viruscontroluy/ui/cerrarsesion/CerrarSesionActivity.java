@@ -1,5 +1,6 @@
 package com.grupo14.viruscontroluy.ui.cerrarsesion;
 
+import android.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,6 +15,7 @@ import com.grupo14.viruscontroluy.providers.LoginBackendProvider;
 import com.grupo14.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontroluy.utility.Utility;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,6 +24,7 @@ public class CerrarSesionActivity extends AppCompatActivity {
 
     private LoginBackendProvider mLoginBackendProvider;
     private FirebaseAuth mFirebaseAuth;
+    private AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class CerrarSesionActivity extends AppCompatActivity {
 
 
 
+        mDialog = new SpotsDialog.Builder().setContext(CerrarSesionActivity.this).setMessage("Espere un momento").build();
         mLoginBackendProvider = new LoginBackendProvider(CerrarSesionActivity.this);
 
         String accessToken = Utility.getInstance().getSessionToken();
@@ -39,6 +43,7 @@ public class CerrarSesionActivity extends AppCompatActivity {
 
 
 
+        mDialog.show();
         mLoginBackendProvider.logoutBackend(accessToken).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -49,6 +54,7 @@ public class CerrarSesionActivity extends AppCompatActivity {
 
                     Intent i = new Intent(CerrarSesionActivity.this, MainActivity.class);
                     startActivity(i);
+                    mDialog.dismiss();
                     Toast.makeText(CerrarSesionActivity.this, "Se cierra sesion " , Toast.LENGTH_SHORT).show();
                 }else{
                     Log.v("LogoutBackend", "LogoutBackend ::: response "+ "message " + response.message());
