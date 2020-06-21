@@ -3,6 +3,7 @@ package com.grupo14.viruscontroluy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,12 +23,14 @@ import com.grupo14.viruscontroluy.providers.LoginBackendProvider;
 import com.grupo14.viruscontroluy.modelos.LoginResponse;
 import com.grupo14.viruscontroluy.providers.UsuarioProvider;
 import com.grupo14.viruscontroluy.services.ApiAdapter;
+import com.grupo14.viruscontroluy.ui.cerrarsesion.CerrarSesionActivity;
 import com.grupo14.viruscontroluy.utility.Utility;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,12 +47,14 @@ public class MainActivity extends AppCompatActivity {
     );
     private LoginBackendProvider mLoginBackendProvider;
     private UsuarioProvider mUsuarioProvider;
+    private AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDialog = new SpotsDialog.Builder().setContext(MainActivity.this).setMessage("Iniciando Sesion ").build();
         mLoginBackendProvider = new LoginBackendProvider(MainActivity.this);
         // Cambia el idioma de los botones
         Locale localizacion = new Locale("es", "ES");
@@ -138,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                     startActivity(intent);
                                                 }
+                                                mDialog.dismiss();
 
                                                 Toast.makeText(MainActivity.this, "El login fue exitoso", Toast.LENGTH_SHORT).show();
 
@@ -173,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 } else {
+
+                    mDialog.show();
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
