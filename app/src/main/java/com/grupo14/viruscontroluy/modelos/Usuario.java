@@ -15,7 +15,7 @@ public class Usuario {
     private Boolean deleted;
     @SerializedName("direccion")
     @Expose
-    private Object direccion;
+    private String direccion;
     @SerializedName("fechaNacimiento")
     @Expose
     private Object fechaNacimiento;
@@ -40,6 +40,9 @@ public class Usuario {
     private String username;
 
     private String cedula;
+    private String telefono;
+    private String direccionString;
+
     private String UIdFirebase;
 
     /**
@@ -66,7 +69,7 @@ public class Usuario {
      * @param primerIngreso
      * @param username
      */
-    public Usuario(String apellido, String correo, Boolean deleted, Object direccion, Object fechaNacimiento, Integer idUsuario, Object nacionalidad, String nombre, Object password, String photoUrl, Object prestadoraSalud, Boolean primerIngreso, String sessionToken, String username, String cedula) {
+    public Usuario(String apellido, String correo, Boolean deleted, String direccion, Object fechaNacimiento, Integer idUsuario, Object nacionalidad, String nombre, Object password, String photoUrl, Object prestadoraSalud, Boolean primerIngreso, String sessionToken, String username, String cedula) {
         super();
         this.apellido = apellido;
         this.correo = correo;
@@ -83,6 +86,24 @@ public class Usuario {
         this.sessionToken = sessionToken;
         this.username = username;
         this.cedula = cedula;
+    }
+
+    public Usuario(String apellido, String correo, String direccion, String nombre, String username, String cedula, String telefono) {
+        this.apellido = apellido;
+        this.correo = correo;
+        this.direccion  = direccion;
+        this.nombre = nombre;
+        this.username = username;
+        this.cedula = cedula;
+        this.telefono = telefono;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getUIdFirebase() {
@@ -117,11 +138,11 @@ public class Usuario {
         this.deleted = deleted;
     }
 
-    public Object getDireccion() {
+    public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(Object direccion) {
+    public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 

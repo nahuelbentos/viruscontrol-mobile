@@ -20,9 +20,17 @@
 
 
     <activity
+        android:id="@+id/nav_perfilUsuario"
+        android:name="com.grupo14.viruscontroluy.ui.primerinicio.PrimerInicioActivity"
+        android:label="Perfil de Usuario"
+
+        tools:layout="@layout/activity_primer_inicio" />
+
+    <activity
         android:id="@+id/nav_reportes"
         android:name="com.grupo14.viruscontroluy.ui.reportesUbicacion.ReportarUbicacionActivity"
         android:label="Reportar ubicacion"
+        app:dataPattern="Reportar ubicación"
         tools:layout="@layout/activity_reportar_ubicacion" />
 
     <activity
@@ -31,11 +39,5 @@
         android:label="Cerrar sesión"
         tools:layout="@layout/activity_cerrar_sesion" />
 
-
-    <fragment
-        android:id="@+id/cerrar_sesion_fragment"
-        android:name="com.grupo14.viruscontroluy.ui.cerrarsesion.CerrarSesionFragment"
-        android:label="Cerrar sesión"
-        tools:layout="@layout/fragment_cerrar_sesion" />
 
 </navigation>

@@ -6,29 +6,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/icon_home"
             android:title="@string/menu_home" />
 
         <item
             android:id="@+id/solicitar_medico"
-            android:icon="@drawable/ic_assignment_ind_black_24dp"
+            android:icon="@drawable/icons8_cl_nica_96"
             android:title="Solicitar médico a domicilio" />
 
 
         <item
             android:id="@+id/nav_reportes"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Reporte ubicacion" />
+            android:icon="@drawable/ic_location_on_black_24dp"
+            android:title="Reportar ubicación" />
+
+
+        <item
+            android:id="@+id/nav_perfilUsuario"
+            android:icon="@drawable/icon_perfil_usuario"
+            android:title="Perfil Usuario" />
 
 
         <item
             android:id="@+id/nav_Cerrar_Sesion"
-            android:icon="@drawable/ic_keyboard_backspace_black_24dp"
+            android:icon="@drawable/icon_cerrar_sesion"
             android:title="Cerrar Sesión" />
 
-        <item
-            android:id="@+id/cerrar_sesion_fragment"
-            android:icon="@drawable/ic_keyboard_backspace_black_24dp"
-            android:title="Cerrar Sesión - fragment" />
     </group>
 </menu>

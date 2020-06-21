@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.primerinicio.PrimerInicioActivity">
 
-    <include layout="@layout/action_bar_toolbar"></include>
+<!--    <include layout="@layout/action_bar_toolbar"></include>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInpuUsername"
+                        android:id="@+id/textInputUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Usuario"
@@ -261,7 +261,8 @@
             android:text="Aceptar"
             android:backgroundTint="@color/colorPrimary"
             android:layout_marginRight="5dp"
-            android:textColor="@color/colorWhite"></Button>
+            android:textColor="@color/colorWhite"
+            ></Button>
 
         <Button
             android:id="@+id/btnCancelarDatos"
