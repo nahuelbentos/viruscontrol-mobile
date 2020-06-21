@@ -29,5 +29,39 @@ public class UsuarioProvider {
     }
 
 
+    public Task<Void> update(Usuario usuario){
+        Log.d("ErrorUpdate", "update: " + usuario);
+
+            /* Lista de campos
+
+        Fotito:
+        Usuario:
+        Email:
+        Nombre:
+        Apellido:
+        CI:
+        Telefono:
+        Direccion:
+
+        */
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("usuario", usuario.getCorreo());
+        map.put("correo", usuario.getCorreo());
+        map.put("nombre", usuario.getNombre());
+        map.put("apellido", usuario.getApellido());
+        map.put("cedula", usuario.getDocumento());
+        map.put("telefono", usuario.getTelefono());
+        map.put("direccion", usuario.getDireccion());
+
+
+
+
+        Log.d("ErrorUpdate", "usuario.getNombre(): " + usuario.getNombre());
+        Log.d("ErrorUpdate", "usuario.getApellido(): " + usuario.getApellido());
+        Log.d("ErrorUpdate", "usuario.getTelefono(): " + usuario.getTelefono());
+
+        return database.child(usuario.getUIdFirebase()).updateChildren(map);
+    }
 
 }

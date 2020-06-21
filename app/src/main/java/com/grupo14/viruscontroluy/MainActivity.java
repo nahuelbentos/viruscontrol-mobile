@@ -27,6 +27,7 @@ import com.grupo14.viruscontroluy.modelos.LoginResponse;
 import com.grupo14.viruscontroluy.providers.UsuarioProvider;
 import com.grupo14.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontroluy.ui.cerrarsesion.CerrarSesionActivity;
+import com.grupo14.viruscontroluy.ui.primerinicio.PrimerInicioActivity;
 import com.grupo14.viruscontroluy.utility.Utility;
 
 import java.util.Arrays;
@@ -133,16 +134,17 @@ public class MainActivity extends AppCompatActivity {
                                                 Utility.getInstance().setLoginResponse(response.body());
 
 
-                                                boolean primerIngreso = response.body().getUsuario().getPrimerIngreso();
-
+                                                Log.d("loginPrimeraVez", "response.body().getResponse(): " + response.body().getResponse());
                                                 Intent intent;
-                                                if (response.body().getResponse().equals(AuthResponse.PRIMERINGRESO)) {
+                                                if(response.body().getResponse().equals("PRIMERINGRESO")) {
+                                                    Log.d("loginPrimeraVez", "1) : " + response.body().getResponse());
 
                                                     Toast.makeText(MainActivity.this, "Voy al primer inicio", Toast.LENGTH_SHORT).show();
-                                                    //                                    intent = new Intent(MainActivity.this, PrimerInicioActivity.class);
-                                                    //                                    startActivity(intent);
+                                                    intent = new Intent(MainActivity.this, PrimerInicioActivity.class);
+                                                    startActivity(intent);
 
                                                 } else {
+                                                    Log.d("loginPrimeraVez", "2) : " + response.body().getResponse());
                                                     intent = new Intent(MainActivity.this, MenuActivity.class);
                                                     //TODO: Obtener foto de perfil y correo de facebook
                                                     startActivity(intent);
@@ -173,13 +175,6 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
-//                    }else{
-//
-//                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-//
-//                        startActivity(intent);
-//
-//                    }
 
 
                 } else {
@@ -211,14 +206,4 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth.removeAuthStateListener(mAuthListener);
     }
 
-    public void cerrarSesion(View view) {
-
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(MainActivity.this, "Sesión cerrada!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-    }
 }

@@ -1,6 +1,8 @@
 package com.grupo14.viruscontroluy.ui.cerrarsesion;
 
 import android.app.AlertDialog;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -32,6 +34,10 @@ public class CerrarSesionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cerrar_sesion);
 
 
+        ActionBar toolbar = getSupportActionBar();
+
+        getSupportActionBar().setTitle("Cerrar sesión");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDialog = new SpotsDialog.Builder().setContext(CerrarSesionActivity.this).setMessage("Espere un momento").build();
         mLoginBackendProvider = new LoginBackendProvider(CerrarSesionActivity.this);
