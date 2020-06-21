@@ -32,12 +32,13 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.grupo14.viruscontroluy.R;
-import com.grupo14.viruscontroluy.modelos.ReportarUbicacion;
+import com.grupo14.viruscontroluy.modelos.Ubicacion;
 import com.grupo14.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontroluy.utility.Utility;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -139,20 +140,19 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
             Toast.makeText(this, "longitude: " + mCurrentLatLng.longitude, Toast.LENGTH_SHORT).show();
 
         }
-        ReportarUbicacion ubicacion = new ReportarUbicacion();
-        ubicacion.setLatitud(mCurrentLatLng.latitude);
-        ubicacion.setLongitud(mCurrentLatLng.longitude);
-        ubicacion.setCiudadano(Utility.getInstance().getLoginResponse().getUsuario());
-        Calendar fecha = Calendar.getInstance();
-        Date date = new Date();
-        fecha.set(date.getYear(),date.getMonth(),date.getDate());
-        ubicacion.setFecha(fecha);
-        Call<ReportarUbicacion> callReportarUbicacion = ApiAdapter.getApiService().postReportarUbicacion(Utility.getInstance().getSessionToken(),ubicacion);
+        Ubicacion ubicacion = new Ubicacion();
+        String latitud = String.valueOf(mCurrentLatLng.latitude);
+        ubicacion.setLatitud(latitud);
+        Log.v("ubicacion", "latitude " + latitud);
+        String longitud = String.valueOf(mCurrentLatLng.longitude);
+        ubicacion.setLongitud(longitud);
+        Log.v("ubicacion", "longitude " + longitud);
+        Call<Void> callReportarUbicacion = ApiAdapter.getApiService().postReportarUbicacion(Utility.getInstance().getSessionToken(),ubicacion);
         Toast.makeText(this, "prueba", Toast.LENGTH_SHORT);
-        callReportarUbicacion.enqueue(new Callback<ReportarUbicacion>(){
+        callReportarUbicacion.enqueue(new Callback<Void>(){
 
             @Override
-            public void onResponse(Call<ReportarUbicacion> call, Response<ReportarUbicacion> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (!response.isSuccessful()) {
                     Log.v("response", "Code " + response.code());
                     return;
@@ -162,7 +162,7 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ReportarUbicacion> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.v("response", "fail " + t.getMessage());
 
             }

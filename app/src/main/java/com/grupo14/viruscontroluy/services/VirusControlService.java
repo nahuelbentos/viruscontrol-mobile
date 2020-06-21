@@ -2,7 +2,7 @@ package com.grupo14.viruscontroluy.services;
 
 import com.grupo14.viruscontroluy.modelos.LoginRequest;
 import com.grupo14.viruscontroluy.modelos.LoginResponse;
-import com.grupo14.viruscontroluy.modelos.ReportarUbicacion;
+import com.grupo14.viruscontroluy.modelos.Ubicacion;
 import com.grupo14.viruscontroluy.modelos.Sintoma;
 
 import java.util.List;
@@ -37,6 +37,6 @@ public interface VirusControlService {
     Call<String> logoutBackend(@Header("Authorization") String accessToken);
 
     @POST("ciudadano/ubicacion/reportar")
-    Call<ReportarUbicacion> postReportarUbicacion(@Header("Authorization") String sessionToken, @Body ReportarUbicacion ubicacion);
+    Call<Void> postReportarUbicacion(@Header("Authorization") String sessionToken, @Body Ubicacion ubicacion);
 
 }
