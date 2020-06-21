@@ -30,9 +30,9 @@
 
 
 
-        <activity android:name=".ui.cerrarsesion.CerrarSesionActivity"></activity>
-        <activity android:name=".ui.primerinicio.PrimerInicioActivity" />
-        <activity android:name=".ui.reportesUbicacion.ReportarUbicacionActivity" />
+        <activity android:name=".ui.cerrarsesion.CerrarSesionActivity" android:parentActivityName=".MenuActivity"></activity>
+        <activity android:name=".ui.primerinicio.PrimerInicioActivity" android:parentActivityName=".MenuActivity"/>
+        <activity android:name=".ui.reportesUbicacion.ReportarUbicacionActivity" android:parentActivityName=".MenuActivity"/>
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu"

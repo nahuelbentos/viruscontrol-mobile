@@ -53,9 +53,9 @@ public class PrimerInicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-        setContentView(R.layout.activity_primer_inicio);
 
+        setContentView(R.layout.activity_primer_inicio);
+/*
         //Obtener elementos de pantalla de login
         Bundle datosUsuario = this.getIntent().getExtras();
 
@@ -111,7 +111,6 @@ public class PrimerInicio extends AppCompatActivity {
                 mDisplayDate.setText(date);
             }
         };
-
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,6 +154,7 @@ public class PrimerInicio extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        */
+
+*/
     }
 }

@@ -1,6 +1,7 @@
 package com.grupo14.viruscontroluy;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
@@ -38,14 +39,9 @@ public class MenuActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -54,7 +50,15 @@ public class MenuActivity extends AppCompatActivity {
                 R.id.nav_home, R.id.solicitar_medico, R.id.nav_reportes, R.id.nav_Cerrar_Sesion)
                 .setDrawerLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
+        Log.d("menuActivity", "getCurrentDestination: " + navController.getCurrentDestination().toString());
+        Log.d("menuActivity", "getNavigatorName: " + navController.getCurrentDestination().getNavigatorName().toString());
+        Log.d("menuActivity", "getId: " + navController.getCurrentDestination().getId());
+
+
+
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
