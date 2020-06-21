@@ -1,9 +1,15 @@
 package com.grupo14.viruscontroluy;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -24,6 +30,11 @@ public class MenuActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private TokenProvider mTokenProvider;
     private AuthProvider mAuthProvider;
+    private TextView tvUsername;
+    private TextView tvCorreoElectronico;
+    ProfileTracker mProfileTracker;
+    ProfilePictureView profilePictureView;
+    ImageView imageViewProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +68,39 @@ public class MenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        tvUsername = headerView.findViewById(R.id.username_menu_lateral);
+        tvCorreoElectronico = headerView.findViewById(R.id.textView_correo_electronico);
+
+        profilePictureView = headerView.findViewById((R.id.imageView));
+
+        if(Profile.getCurrentProfile() == null) {
+            mProfileTracker = new ProfileTracker() {
+                @Override
+                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                    Log.v("MenuActivity - fb - nm", currentProfile.getFirstName());
+                    Log.v("MenuActivity - fb - id", currentProfile.getId());
+                    mProfileTracker.stopTracking();
+                    tvUsername.setText(Profile.getCurrentProfile().getName());
+                    profilePictureView.setProfileId(Profile.getCurrentProfile().getId());
+                }
+            };
+
+            // no need to call startTracking() on mProfileTracker
+            // because it is called by its constructor, internally.
+        }
+        else {
+            Profile profile = Profile.getCurrentProfile();
+            Log.v("MenuActivity - facebook", profile.getFirstName());
+            Log.v("MenuActivity - facebook", profile.getLastName());
+            Log.v("MenuActivity - facebook", profile.getId());
+            //mProfileTracker.stopTracking();
+            tvUsername.setText(Profile.getCurrentProfile().getName());
+            profilePictureView.setProfileId(Profile.getCurrentProfile().getId());
+        }
+
     }
 
     @Override

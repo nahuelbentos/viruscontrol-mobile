@@ -9,8 +9,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.ProfileTracker;
+import com.facebook.login.widget.ProfilePictureView;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public static final int REQUEST_CODE = 100;
+
 
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.FacebookBuilder().build(),
@@ -140,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                 } else {
                                                     intent = new Intent(MainActivity.this, MenuActivity.class);
-
+                                                    //TODO: Obtener foto de perfil y correo de facebook
                                                     startActivity(intent);
                                                 }
                                                 mDialog.dismiss();
