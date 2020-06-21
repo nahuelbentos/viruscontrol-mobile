@@ -16,6 +16,6 @@ public interface ILoginBackend {
     Call<LoginResponse> loginBackend(@Body LoginRequest body);
 
     @DELETE("autenticacion/salir/")
-    Call<String> logoutBackend(@Header("Authorization") String accessToken);
+    Call<Void> logoutBackend(@Header("authorization") String accessToken);
 
 }

@@ -39,9 +39,9 @@ public class CerrarSesionActivity extends AppCompatActivity {
 
 
 
-        mLoginBackendProvider.logoutBackend(accessToken).enqueue(new Callback<String>() {
+        mLoginBackendProvider.logoutBackend(accessToken).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
 
                     mFirebaseAuth = FirebaseAuth.getInstance();
@@ -59,12 +59,21 @@ public class CerrarSesionActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.v("LogoutBackend","LogoutBackend ::: Fail "+ "Code " + t.getMessage());
+            public void onFailure(Call<Void> call, Throwable t) {
+
+                if(t.getCause() != null){
+                    Log.v("LogoutBackend","LogoutBackend ::: 2)Fail : " + t.getCause().toString());
+                }
+
+                Log.v("LogoutBackend","LogoutBackend ::: 3)Fail : " + t.getMessage());
+                Log.v("LogoutBackend","LogoutBackend ::: 4)Fail : " + t.getLocalizedMessage());
+                Log.v("LogoutBackend","LogoutBackend ::: 5)call : " + call.toString());
 
 
             }
         });
+
+
 
     }
 }

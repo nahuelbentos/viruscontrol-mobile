@@ -62,6 +62,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.7'
 
 
+    implementation 'com.squareup.okhttp3:okhttp:4.2.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    implementation 'javax.inject:javax.inject:1'
+
+
 
     // squareup
     implementation 'com.squareup.picasso:picasso:2.5.2'

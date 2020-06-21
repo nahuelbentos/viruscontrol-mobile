@@ -73,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
                             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                 if (response.isSuccessful()) {
 
+                                    Log.d("onResponse", "onResponse: response: " + response.toString());
+                                    Log.d("onResponse", "onResponse: getResponse: " + response.body().getResponse().toString());
+                                    //                                Log.d("onResponse", "onResponse: getSessionToken: " + response.body().getSessionToken().toString());
+                                    Log.d("onResponse", "onResponse: response.getNombre: " + response.body().getUsuario().getNombre().toString());
+                                    Log.d("onResponse", "onResponse: response.getApellido: " + response.body().getUsuario().getApellido().toString());
+                                    Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
+                                    Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
+
                                     Call<List<Sintoma>> sintomasCall = ApiAdapter.getApiService().getSintomas(response.body().getSessionToken());
 
 
@@ -102,13 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
                                     Utility.getInstance().setSessionToken(response.body().getSessionToken());
                                     Utility.getInstance().setLoginResponse(response.body());
-                                    Log.d("onResponse", "onResponse: response: " + response.toString());
-                                    Log.d("onResponse", "onResponse: getResponse: " + response.body().getResponse().toString());
-                                    //                                Log.d("onResponse", "onResponse: getSessionToken: " + response.body().getSessionToken().toString());
-                                    Log.d("onResponse", "onResponse: response.getNombre: " + response.body().getUsuario().getNombre().toString());
-                                    Log.d("onResponse", "onResponse: response.getApellido: " + response.body().getUsuario().getApellido().toString());
-                                    Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
-                                    Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
 
 
                                     boolean primerIngreso = response.body().getUsuario().getPrimerIngreso();
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<LoginResponse> call, Throwable t) {
+                                Log.d("errorOnResponse", "onResponse: error: " + t.getMessage());
 
                             }
                         });

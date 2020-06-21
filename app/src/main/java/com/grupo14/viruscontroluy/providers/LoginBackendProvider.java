@@ -26,7 +26,7 @@ public class LoginBackendProvider {
     }
 
 
-    public Call<String> logoutBackend(String token ) {
+    public Call<Void> logoutBackend(String token ) {
 
 
         // Hago el request el servicio de Google usando la interfaz como referencia.
