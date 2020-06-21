@@ -13,18 +13,6 @@ public class AuthProvider {
     }
 
     // Una tarea sería como un observable o promesa
-    public Task<AuthResult> register(String email, String password){
-       return  mAuth.createUserWithEmailAndPassword(email, password);
-    }
-
-    public Task<AuthResult> login(String email, String password){
-        return  mAuth.signInWithEmailAndPassword(email, password);
-    }
-
-    public void logout(){
-        mAuth.signOut();
-    }
-
     public String getId(){
         return  mAuth.getCurrentUser().getUid();
     }

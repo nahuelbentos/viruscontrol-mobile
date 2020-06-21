@@ -7,6 +7,9 @@ import android.view.Menu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.grupo14.viruscontroluy.modelos.Sintoma;
+import com.grupo14.viruscontroluy.providers.AuthProvider;
+import com.grupo14.viruscontroluy.providers.TokenProvider;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,11 +22,20 @@ import androidx.appcompat.widget.Toolbar;
 public class MenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private TokenProvider mTokenProvider;
+    private AuthProvider mAuthProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
+        mAuthProvider = new AuthProvider();
+        mTokenProvider = new TokenProvider();
+        generarToken();
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -60,4 +72,11 @@ public class MenuActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
+    public void generarToken(){
+
+        mTokenProvider.create(mAuthProvider.getId());
+    }
+
 }
