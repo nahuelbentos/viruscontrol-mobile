@@ -40,4 +40,12 @@ public class LoginBackendProvider {
         // Hago el request el servicio de Google usando la interfaz como referencia.
         return RetrofitClient.validarDatosBackend().create(ILoginBackend.class).validarDatosBackend(usuario);
     }
+
+    public Call<Void> setPushToken(String sessionToken, String pushToken) {
+
+
+        // Hago el request el servicio de Google usando la interfaz como referencia.
+        return RetrofitClient.setPushToken().create(ILoginBackend.class).setPushToken("text/plain", sessionToken, pushToken);
+    }
+
 }

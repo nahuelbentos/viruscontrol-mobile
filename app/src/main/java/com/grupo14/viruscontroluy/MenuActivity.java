@@ -1,11 +1,24 @@
 package com.grupo14.viruscontroluy;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
@@ -15,7 +28,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.grupo14.viruscontroluy.modelos.Sintoma;
 import com.grupo14.viruscontroluy.providers.AuthProvider;
+import com.grupo14.viruscontroluy.providers.LoginBackendProvider;
 import com.grupo14.viruscontroluy.providers.TokenProvider;
+import com.grupo14.viruscontroluy.ui.cerrarsesion.CerrarSesionActivity;
+import com.grupo14.viruscontroluy.utility.Utility;
+import com.squareup.picasso.Picasso;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,17 +42,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TokenProvider mTokenProvider;
     private AuthProvider mAuthProvider;
-    private TextView tvUsername;
-    private TextView tvCorreoElectronico;
-    ProfileTracker mProfileTracker;
-    ProfilePictureView profilePictureView;
-    ImageView imageViewProfile;
 
+    private TextView mTextViewNombreUsuario;
+    private TextView mTextViewEmailUsuario;
+
+    private ImageView mImageViewFotoUsuario;
+    private LoginBackendProvider mLoginBackendProvider;
+
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +66,9 @@ public class MenuActivity extends AppCompatActivity {
 
 
         mAuthProvider = new AuthProvider();
-        mTokenProvider = new TokenProvider();
+        mTokenProvider = new TokenProvider(MenuActivity.this);
+        mLoginBackendProvider = new LoginBackendProvider(MenuActivity.this);
+
         generarToken();
 
 
@@ -74,37 +99,25 @@ public class MenuActivity extends AppCompatActivity {
 
         //NavigationView navigationView1 = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        tvUsername = headerView.findViewById(R.id.username_menu_lateral);
-        tvCorreoElectronico = headerView.findViewById(R.id.textView_correo_electronico);
 
-        profilePictureView = headerView.findViewById((R.id.imageView));
 
-        if(Profile.getCurrentProfile() == null) {
-            mProfileTracker = new ProfileTracker() {
-                @Override
-                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                    Log.v("MenuActivity - fb - nm", currentProfile.getFirstName());
-                    Log.v("MenuActivity - fb - id", currentProfile.getId());
-                    mProfileTracker.stopTracking();
-                    tvUsername.setText(Profile.getCurrentProfile().getName());
-                    profilePictureView.setProfileId(Profile.getCurrentProfile().getId());
-                }
-            };
 
-            // no need to call startTracking() on mProfileTracker
-            // because it is called by its constructor, internally.
-        }
-        else {
-            Profile profile = Profile.getCurrentProfile();
-            Log.v("MenuActivity - facebook", profile.getFirstName());
-            Log.v("MenuActivity - facebook", profile.getLastName());
-            Log.v("MenuActivity - facebook", profile.getId());
-            //mProfileTracker.stopTracking();
-            tvUsername.setText(Profile.getCurrentProfile().getName());
-            profilePictureView.setProfileId(Profile.getCurrentProfile().getId());
-        }
+        mTextViewEmailUsuario = headerView.findViewById(R.id.textViewEmail);
+        mTextViewNombreUsuario = headerView.findViewById(R.id.textViewNombreUsuario);
+        mImageViewFotoUsuario = headerView.findViewById(R.id.imagenUsuario);
+
+        mTextViewNombreUsuario.setText(Utility.getInstance().getFirebaseUser().getDisplayName());
+        mTextViewEmailUsuario.setText(Utility.getInstance().getFirebaseUser().getEmail());
+
+        String image = Utility.getInstance().getFirebaseUser().getPhotoUrl().toString();
+
+        mImageViewFotoUsuario.setImageURI(Utility.getInstance().getFirebaseUser().getPhotoUrl());
+
+        Picasso.with(MenuActivity.this ).load(image).into(mImageViewFotoUsuario);
 
     }
+
+ 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,6 +137,9 @@ public class MenuActivity extends AppCompatActivity {
     public void generarToken(){
 
         mTokenProvider.create(mAuthProvider.getId());
+
+
+
     }
 
 }

@@ -76,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
 
+                    Utility.getInstance().setFirebaseUser(user);
+
                     String Name = user.getDisplayName();
                     String[] splited = Name.split("\\s+");
 
