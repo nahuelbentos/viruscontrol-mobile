@@ -8,11 +8,35 @@
     tools:context=".ui.home.HomeFragment">
 
 
-    
-    <ImageView
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="50dp"
+            android:text="Bienvenido a"
+            android:textAlignment="center"
+            android:textSize="50dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/banner"/>
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/banner"
+            />
+    </LinearLayout>
     
     
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
