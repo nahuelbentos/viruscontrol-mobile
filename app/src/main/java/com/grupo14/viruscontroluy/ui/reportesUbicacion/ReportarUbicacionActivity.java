@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -11,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +25,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -39,10 +38,6 @@ import com.grupo14.viruscontroluy.R;
 import com.grupo14.viruscontroluy.modelos.Ubicacion;
 import com.grupo14.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontroluy.utility.Utility;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,6 +60,7 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
     ToggleButton tgbtnManual;
     TextView textManual;
     Button buttonManual;
+    SharedPreferences sharpref;
 
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
@@ -95,11 +91,32 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Reportar ubicación");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        sharpref = getApplicationContext().getSharedPreferences("ReporteUbicacion",MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharpref.edit();
+
         tgbtn = (ToggleButton) findViewById(R.id.tgbtn1);
         tgbtnManual = (ToggleButton) findViewById(R.id.tgbtn2);
         textManual = findViewById(R.id.textManual);
         buttonManual = findViewById(R.id.buttonManual);
 
+        boolean valortgbtn = sharpref.getBoolean("tgbtn", false);
+        boolean valorttgbtnManual = sharpref.getBoolean("tgbtnManual", false);
+        boolean valorttextManual = sharpref.getBoolean("textManual", false);
+        tgbtn.setChecked(valortgbtn);
+        tgbtnManual.setChecked(valorttgbtnManual);
+        if(valortgbtn == true && valorttgbtnManual == false) {
+            tgbtnManual.setVisibility(View.VISIBLE);
+            textManual.setVisibility(View.VISIBLE);
+        }
+        if(valorttgbtnManual == true) {
+            tgbtnManual.setVisibility(View.VISIBLE);
+            buttonManual.setVisibility(View.VISIBLE);
+            textManual.setVisibility(View.VISIBLE);
+        }
+        if (valortgbtn == false) {
+            tgbtnManual.setVisibility(View.INVISIBLE);
+            textManual.setVisibility(View.INVISIBLE);
+        }
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
@@ -111,18 +128,44 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
         buttonManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                reportarUbicacionManual();
-                Toast.makeText(getApplicationContext(), "Ubicación enviada con éxito." , Toast.LENGTH_SHORT).show();
+
+                if(validarPermisos()) {
+                    reportarUbicacionManual();
+                    Toast.makeText(getApplicationContext(), "Ubicación enviada con éxito.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
+        tgbtnManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(tgbtnManual.isChecked()) {
+                    editor.putBoolean("tgbtnManual", true);
+                    editor.putBoolean("textManual", true);
+                }else
+                    editor.putBoolean("tgbtnManual", false);
+                editor.commit();
+                onclickManual();
+            }
+        });
+
+        tgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onclick();
+                if(tgbtn.isChecked())
+                    editor.putBoolean("tgbtn", true);
+                else
+                    editor.putBoolean("tgbtn", false);
+                editor.commit();
+            }
+        });
     }
 
-    public void onclick(View view) {
+    public void onclick() {
         if(tgbtn.isChecked()){
             enviarUbicacionPeriodicamente();
         }
-
         if(tgbtnManual.getVisibility() == View.INVISIBLE) {
             tgbtnManual.setVisibility(View.VISIBLE);
             textManual.setVisibility(View.VISIBLE);
@@ -136,7 +179,7 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
         }
     }
 
-    public void onclickManual(View view) {
+    public void onclickManual() {
         handler.removeCallbacksAndMessages(null);
         if(buttonManual.getVisibility() == View.INVISIBLE)
             buttonManual.setVisibility(View.VISIBLE);
@@ -154,39 +197,66 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
                 handler.postDelayed(this, TIEMPO);
                 Log.v("ubicacion", "latitude " + mCurrentLatLng.latitude);
                 Log.v("ubicacion", "latitude " + mCurrentLatLng.longitude);
-                reportarUbicacionManual();
+
+                if(validarPermisos()) {
+                    reportarUbicacionManual();
+                }
             }
         }, TIEMPO);
     }
 
     public void reportarUbicacionManual() {
-        Toast.makeText(this, "Reportaste ubicación", Toast.LENGTH_SHORT).show();
-//        if(mCurrentLatLng != null){
-//            Toast.makeText(this, "Latitud: " + mCurrentLatLng.latitude, Toast.LENGTH_SHORT).show();
-//            Toast.makeText(this, "longitude: " + mCurrentLatLng.longitude, Toast.LENGTH_SHORT).show();
-//        }
-        Ubicacion ubicacion = new Ubicacion();
-        String latitud = String.valueOf(mCurrentLatLng.latitude);
-        ubicacion.setLatitud(latitud);
-        String longitud = String.valueOf(mCurrentLatLng.longitude);
-        ubicacion.setLongitud(longitud);
-        Call<Void> callReportarUbicacion = ApiAdapter.getApiService().postReportarUbicacion(Utility.getInstance().getSessionToken(),ubicacion);
-        callReportarUbicacion.enqueue(new Callback<Void>(){
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (!response.isSuccessful()) {
-                    Log.v("response", "Code " + response.code());
-                    return;
+
+            Toast.makeText(this, "Reportaste ubicación", Toast.LENGTH_SHORT).show();
+    //        if(mCurrentLatLng != null){
+    //            Toast.makeText(this, "Latitud: " + mCurrentLatLng.latitude, Toast.LENGTH_SHORT).show();
+    //            Toast.makeText(this, "longitude: " + mCurrentLatLng.longitude, Toast.LENGTH_SHORT).show();
+    //        }
+            Ubicacion ubicacion = new Ubicacion();
+            String latitud = String.valueOf(mCurrentLatLng.latitude);
+            ubicacion.setLatitud(latitud);
+            String longitud = String.valueOf(mCurrentLatLng.longitude);
+            ubicacion.setLongitud(longitud);
+            Call<Void> callReportarUbicacion = ApiAdapter.getApiService().postReportarUbicacion(Utility.getInstance().getSessionToken(),ubicacion);
+            callReportarUbicacion.enqueue(new Callback<Void>(){
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (!response.isSuccessful()) {
+                        Log.v("response", "Code " + response.code());
+                        return;
+                    }
                 }
-            }
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.v("response", "fail " + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Log.v("response", "fail " + t.getMessage());
+                }
+            });
+
     }
-
-
+    public boolean validarPermisos(){
+        boolean resp = false;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            Log.d("ErrorLocation", "    1: " + gpsActived());
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                Log.d("ErrorLocation", "    2: " + gpsActived());
+                if (gpsActived()){
+                    Log.d("ErrorLocation", "    3: " + gpsActived());
+                    resp =  true;
+                } else {
+                    showAlertDialogNOGPS();
+                }
+            } else {
+                checkLocationPermissions();
+            }
+        } else {
+            if (gpsActived()){
+                resp = true;
+            } else {
+                showAlertDialogNOGPS();
+            }
+        }
+        return resp;
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
