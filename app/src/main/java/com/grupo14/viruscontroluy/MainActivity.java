@@ -88,14 +88,20 @@ public class MainActivity extends AppCompatActivity {
                             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                 if (response.isSuccessful()) {
 
-                                    Log.d("onResponse", "onResponse: response: " + response.toString());
-                                    Log.d("onResponse", "onResponse: getResponse: " + response.body().getResponse().toString());
-                                    //                                Log.d("onResponse", "onResponse: getSessionToken: " + response.body().getSessionToken().toString());
-                                    Log.d("onResponse", "onResponse: response.getNombre: " + response.body().getUsuario().getNombre().toString());
-                                    Log.d("onResponse", "onResponse: response.getApellido: " + response.body().getUsuario().getApellido().toString());
-                                    Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
-                                    Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
 
+                                    if(response.body().getResponse().equals("FAILED")) {
+                                        mFirebaseAuth.signOut();
+                                        Toast.makeText(MainActivity.this, "La cuenta que está ingresando, ya esta registrada en la plataforma como Médico, ingrese con otra.", Toast.LENGTH_LONG).show();
+                                    }else{
+
+
+                                        Log.d("onResponse", "onResponse: response: " + response.toString());
+                                        Log.d("onResponse", "onResponse: getResponse: " + response.body().getResponse().toString());
+                                        //                                Log.d("onResponse", "onResponse: getSessionToken: " + response.body().getSessionToken().toString());
+                                        Log.d("onResponse", "onResponse: response.getNombre: " + response.body().getUsuario().getNombre().toString());
+                                        Log.d("onResponse", "onResponse: response.getApellido: " + response.body().getUsuario().getApellido().toString());
+                                        Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
+                                        Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
                                     // Creo el usuario en Firebase.
                                     Usuario usuario = response.body().getUsuario();
                                     usuario.setUIdFirebase(user.getUid());
@@ -138,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                 Log.d("loginPrimeraVez", "response.body().getResponse(): " + response.body().getResponse());
                                                 Intent intent;
-                                                if(response.body().getResponse().equals("PRIMERINGRESO")) {
+                                                if (response.body().getResponse().equals("PRIMERINGRESO")) {
                                                     Log.d("loginPrimeraVez", "1) : " + response.body().getResponse());
 
                                                     Toast.makeText(MainActivity.this, "Voy al primer inicio", Toast.LENGTH_SHORT).show();
@@ -164,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         }
                                     });
-
+                                    }
 
                                 } else {
                                     Toast.makeText(MainActivity.this, "El login no fue exitoso", Toast.LENGTH_SHORT).show();
