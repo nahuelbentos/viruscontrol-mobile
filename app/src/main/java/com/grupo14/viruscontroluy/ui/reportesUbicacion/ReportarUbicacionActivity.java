@@ -9,7 +9,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -56,6 +58,9 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
 
     private LatLng mCurrentLatLng;
 
+    Handler handler = new Handler();
+    private final int TIEMPO = 100000;
+
     ToggleButton tgbtn;
     ToggleButton tgbtnManual;
     TextView textManual;
@@ -68,11 +73,8 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
             super.onLocationResult(locationResult);
             for (Location location : locationResult.getLocations()) {
                 if (getApplicationContext() != null) {
-
                     Log.d("ErrorLocation", "onLocationResult: long "+ location.getLongitude());
                     Log.d("ErrorLocation", "onLocationResult: lati "+ location.getLatitude());
-//                    Toast.makeText(this, "Latitud: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(this, "long: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
                     mCurrentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 } else{
 
@@ -88,7 +90,6 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reportar_ubicacion);
 
-
         ActionBar toolbar = getSupportActionBar();
 
         getSupportActionBar().setTitle("Reportar ubicación");
@@ -99,25 +100,27 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
         textManual = findViewById(R.id.textManual);
         buttonManual = findViewById(R.id.buttonManual);
 
+        mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setSmallestDisplacement(5);
+        startLocation();
 
-
+        buttonManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reportarUbicacionManual();
+                Toast.makeText(getApplicationContext(), "Ubicación enviada con éxito." , Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
     public void onclick(View view) {
-
         if(tgbtn.isChecked()){
-
-            mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
-
-            mLocationRequest = new LocationRequest();
-            mLocationRequest.setInterval(1000);
-            mLocationRequest.setFastestInterval(1000);
-            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            mLocationRequest.setSmallestDisplacement(5);
-
-
-            startLocation();
+            enviarUbicacionPeriodicamente();
         }
 
         if(tgbtnManual.getVisibility() == View.INVISIBLE) {
@@ -134,49 +137,53 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
     }
 
     public void onclickManual(View view) {
+        handler.removeCallbacksAndMessages(null);
         if(buttonManual.getVisibility() == View.INVISIBLE)
             buttonManual.setVisibility(View.VISIBLE);
         else
             buttonManual.setVisibility(View.INVISIBLE);
+        if(tgbtn.isChecked() && !tgbtnManual.isChecked()){
+            enviarUbicacionPeriodicamente();
+        }
     }
 
-    public void reportarUbicacionManual(View view) {
+    public void enviarUbicacionPeriodicamente() {
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Log.d("UbicacionPeriodicamente", "entra al run ");
+                handler.postDelayed(this, TIEMPO);
+                Log.v("ubicacion", "latitude " + mCurrentLatLng.latitude);
+                Log.v("ubicacion", "latitude " + mCurrentLatLng.longitude);
+                reportarUbicacionManual();
+            }
+        }, TIEMPO);
+    }
 
+    public void reportarUbicacionManual() {
         Toast.makeText(this, "Reportaste ubicación", Toast.LENGTH_SHORT).show();
-        if(mCurrentLatLng != null){
-            Toast.makeText(this, "Latitud: " + mCurrentLatLng.latitude, Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "longitude: " + mCurrentLatLng.longitude, Toast.LENGTH_SHORT).show();
-
-        }
+//        if(mCurrentLatLng != null){
+//            Toast.makeText(this, "Latitud: " + mCurrentLatLng.latitude, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "longitude: " + mCurrentLatLng.longitude, Toast.LENGTH_SHORT).show();
+//        }
         Ubicacion ubicacion = new Ubicacion();
         String latitud = String.valueOf(mCurrentLatLng.latitude);
         ubicacion.setLatitud(latitud);
-        Log.v("ubicacion", "latitude " + latitud);
         String longitud = String.valueOf(mCurrentLatLng.longitude);
         ubicacion.setLongitud(longitud);
-        Log.v("ubicacion", "longitude " + longitud);
         Call<Void> callReportarUbicacion = ApiAdapter.getApiService().postReportarUbicacion(Utility.getInstance().getSessionToken(),ubicacion);
-        Toast.makeText(this, "prueba", Toast.LENGTH_SHORT);
         callReportarUbicacion.enqueue(new Callback<Void>(){
-
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (!response.isSuccessful()) {
                     Log.v("response", "Code " + response.code());
                     return;
                 }
-                Log.v("response", "Afuera del if " + response.code());
-                Toast.makeText(getApplicationContext(), "Ubicación enviada con éxito." , Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.v("response", "fail " + t.getMessage());
-
             }
         });
-
-
     }
 
 
