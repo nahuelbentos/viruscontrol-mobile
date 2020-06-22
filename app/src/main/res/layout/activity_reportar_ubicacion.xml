@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     
-    tools:context=".ui.login.ui.reportesUbicacion.ReportarUbicacionActivity">
+    tools:context=".ui.reportesUbicacion.ReportarUbicacionActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -61,8 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Reportar ubicación"
-            android:visibility="invisible"
-            android:onClick="reportarUbicacionManual"/>
+            android:visibility="invisible" />
 
 
     </LinearLayout>
