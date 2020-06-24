@@ -9,8 +9,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.ProfileTracker;
+import com.facebook.login.widget.ProfilePictureView;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +27,7 @@ import com.grupo14.viruscontroluy.modelos.LoginResponse;
 import com.grupo14.viruscontroluy.providers.UsuarioProvider;
 import com.grupo14.viruscontroluy.services.ApiAdapter;
 import com.grupo14.viruscontroluy.ui.cerrarsesion.CerrarSesionActivity;
+import com.grupo14.viruscontroluy.ui.primerinicio.PrimerInicioActivity;
 import com.grupo14.viruscontroluy.utility.Utility;
 
 import java.util.Arrays;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public static final int REQUEST_CODE = 100;
+
 
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.FacebookBuilder().build(),
@@ -71,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
 
+                    Utility.getInstance().setFirebaseUser(user);
+
                     String Name = user.getDisplayName();
                     String[] splited = Name.split("\\s+");
 
@@ -81,14 +88,20 @@ public class MainActivity extends AppCompatActivity {
                             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                                 if (response.isSuccessful()) {
 
-                                    Log.d("onResponse", "onResponse: response: " + response.toString());
-                                    Log.d("onResponse", "onResponse: getResponse: " + response.body().getResponse().toString());
-                                    //                                Log.d("onResponse", "onResponse: getSessionToken: " + response.body().getSessionToken().toString());
-                                    Log.d("onResponse", "onResponse: response.getNombre: " + response.body().getUsuario().getNombre().toString());
-                                    Log.d("onResponse", "onResponse: response.getApellido: " + response.body().getUsuario().getApellido().toString());
-                                    Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
-                                    Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
 
+                                    if(response.body().getResponse().equals("FAILED")) {
+                                        mFirebaseAuth.signOut();
+                                        Toast.makeText(MainActivity.this, "La cuenta que está ingresando, ya esta registrada en la plataforma como Médico, ingrese con otra.", Toast.LENGTH_LONG).show();
+                                    }else{
+
+
+                                        Log.d("onResponse", "onResponse: response: " + response.toString());
+                                        Log.d("onResponse", "onResponse: getResponse: " + response.body().getResponse().toString());
+                                        //                                Log.d("onResponse", "onResponse: getSessionToken: " + response.body().getSessionToken().toString());
+                                        Log.d("onResponse", "onResponse: response.getNombre: " + response.body().getUsuario().getNombre().toString());
+                                        Log.d("onResponse", "onResponse: response.getApellido: " + response.body().getUsuario().getApellido().toString());
+                                        Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
+                                        Log.d("onResponse", "onResponse: response.getPrimerIngreso: " + response.body().getUsuario().getPrimerIngreso().toString());
                                     // Creo el usuario en Firebase.
                                     Usuario usuario = response.body().getUsuario();
                                     usuario.setUIdFirebase(user.getUid());
@@ -129,18 +142,19 @@ public class MainActivity extends AppCompatActivity {
                                                 Utility.getInstance().setLoginResponse(response.body());
 
 
-                                                boolean primerIngreso = response.body().getUsuario().getPrimerIngreso();
-
+                                                Log.d("loginPrimeraVez", "response.body().getResponse(): " + response.body().getResponse());
                                                 Intent intent;
-                                                if (response.body().getResponse().equals(AuthResponse.PRIMERINGRESO)) {
+                                                if (response.body().getResponse().equals("PRIMERINGRESO")) {
+                                                    Log.d("loginPrimeraVez", "1) : " + response.body().getResponse());
 
                                                     Toast.makeText(MainActivity.this, "Voy al primer inicio", Toast.LENGTH_SHORT).show();
-                                                    //                                    intent = new Intent(MainActivity.this, PrimerInicioActivity.class);
-                                                    //                                    startActivity(intent);
+                                                    intent = new Intent(MainActivity.this, PrimerInicioActivity.class);
+                                                    startActivity(intent);
 
                                                 } else {
+                                                    Log.d("loginPrimeraVez", "2) : " + response.body().getResponse());
                                                     intent = new Intent(MainActivity.this, MenuActivity.class);
-
+                                                    //TODO: Obtener foto de perfil y correo de facebook
                                                     startActivity(intent);
                                                 }
                                                 mDialog.dismiss();
@@ -156,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         }
                                     });
-
+                                    }
 
                                 } else {
                                     Toast.makeText(MainActivity.this, "El login no fue exitoso", Toast.LENGTH_SHORT).show();
@@ -169,13 +183,6 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
-//                    }else{
-//
-//                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-//
-//                        startActivity(intent);
-//
-//                    }
 
 
                 } else {
@@ -207,14 +214,4 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth.removeAuthStateListener(mAuthListener);
     }
 
-    public void cerrarSesion(View view) {
-
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(MainActivity.this, "Sesión cerrada!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-    }
 }

@@ -39,8 +39,8 @@ public class Usuario {
     @Expose
     private String username;
 
-    private String cedula;
-    private String telefono;
+    private String documento;
+    private String nroTelefono;
     private String direccionString;
 
     private String UIdFirebase;
@@ -69,7 +69,7 @@ public class Usuario {
      * @param primerIngreso
      * @param username
      */
-    public Usuario(String apellido, String correo, Boolean deleted, String direccion, Object fechaNacimiento, Integer idUsuario, Object nacionalidad, String nombre, Object password, String photoUrl, Object prestadoraSalud, Boolean primerIngreso, String sessionToken, String username, String cedula) {
+    public Usuario(String apellido, String correo, Boolean deleted, String direccion, Object fechaNacimiento, Integer idUsuario, Object nacionalidad, String nombre, Object password, String photoUrl, Object prestadoraSalud, Boolean primerIngreso, String sessionToken, String username, String documento) {
         super();
         this.apellido = apellido;
         this.correo = correo;
@@ -85,25 +85,25 @@ public class Usuario {
         this.primerIngreso = primerIngreso;
         this.sessionToken = sessionToken;
         this.username = username;
-        this.cedula = cedula;
+        this.documento = documento;
     }
 
-    public Usuario(String apellido, String correo, String direccion, String nombre, String username, String cedula, String telefono) {
+    public Usuario(String apellido, String correo, String direccion, String nombre, String username, String documento, String nroTelefono) {
         this.apellido = apellido;
         this.correo = correo;
         this.direccion  = direccion;
         this.nombre = nombre;
         this.username = username;
-        this.cedula = cedula;
-        this.telefono = telefono;
+        this.documento = documento;
+        this.nroTelefono = nroTelefono;
     }
 
     public String getTelefono() {
-        return telefono;
+        return nroTelefono;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setTelefono(String nroTelefono) {
+        this.nroTelefono = nroTelefono;
     }
 
     public String getUIdFirebase() {
@@ -226,12 +226,12 @@ public class Usuario {
         this.username = username;
     }
 
-    public String getCedula(){
-        return cedula;
+    public String getDocumento(){
+        return documento;
     }
 
-    public void setCedula(String cedula){
-        this.cedula = cedula;
+    public void setDocumento(String documento){
+        this.documento = documento;
     }
 
 }

@@ -50,7 +50,7 @@ public class UsuarioProvider {
         map.put("correo", usuario.getCorreo());
         map.put("nombre", usuario.getNombre());
         map.put("apellido", usuario.getApellido());
-        map.put("cedula", usuario.getCedula());
+        map.put("cedula", usuario.getDocumento());
         map.put("telefono", usuario.getTelefono());
         map.put("direccion", usuario.getDireccion());
 

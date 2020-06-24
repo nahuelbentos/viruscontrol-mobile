@@ -43,6 +43,28 @@ public class RetrofitClient {
 
     }
 
+    public static Retrofit setPushToken(){
+
+
+
+        // Creamos un interceptor y le indicamos el log level a usar
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        // Asociamos el interceptor a las peticiones
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging);
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit;
+
+
+    }
+
     public static Retrofit validarDatosBackend(){
 
 

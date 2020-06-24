@@ -90,6 +90,8 @@ public class PrimerInicioActivity extends AppCompatActivity {
         mUsuarioProvider = new UsuarioProvider();
         mAuthProvider = new AuthProvider();
 
+        cargarDatosEnImputs();
+
         mButtonConfirmarDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +108,19 @@ public class PrimerInicioActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void cargarDatosEnImputs() {
+
+
+
+        mTextInputUsuario.setText(Utility.getInstance().getLoginResponse().getUsuario().getUsername());
+        mTextInputEmail.setText(Utility.getInstance().getLoginResponse().getUsuario().getCorreo());
+        mTextInputNombre.setText(Utility.getInstance().getLoginResponse().getUsuario().getNombre());
+        mTextInputApellido.setText(Utility.getInstance().getLoginResponse().getUsuario().getApellido());
+        mTextInputCI.setText(Utility.getInstance().getLoginResponse().getUsuario().getDocumento());
+        mTextInputTelefono.setText(Utility.getInstance().getLoginResponse().getUsuario().getTelefono());
+        mTextInputDireccion.setText(Utility.getInstance().getLoginResponse().getUsuario().getDireccion());
     }
 
     private void confirmarDatos() {
@@ -149,14 +164,17 @@ public class PrimerInicioActivity extends AppCompatActivity {
                     mUsuarioProvider.update(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-
-                            Intent i = new Intent(PrimerInicioActivity.this, MainActivity.class);
+                            setearCamposEnUtility();
+                            Toast.makeText(PrimerInicioActivity.this, "Se modificaron los campos con exito", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(PrimerInicioActivity.this, MenuActivity.class);
                             startActivity(i);
                             mDialog.dismiss();
                         }
                     });
 
                 }else{
+                    mDialog.dismiss();
+                    Toast.makeText(PrimerInicioActivity.this, "Ocurrió un error", Toast.LENGTH_SHORT).show();
                     Log.v("LogoutBackend", "LogoutBackend ::: response "+ "message " + response.message());
                     Log.v("LogoutBackend", "LogoutBackend ::: response "+ "body " + response.body());
                     Log.v("LogoutBackend", "LogoutBackend ::: response "+ "Code " + response.code());
@@ -178,6 +196,25 @@ public class PrimerInicioActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void setearCamposEnUtility() {
+
+        String username = mTextInputUsuario.getText().toString();
+        String correo = mTextInputEmail.getText().toString();
+        String nombre = mTextInputNombre.getText().toString();
+        String apellido = mTextInputApellido.getText().toString();
+        String cedula = mTextInputCI.getText().toString();
+        String telefono = mTextInputTelefono.getText().toString();
+        String direccion = mTextInputDireccion.getText().toString();
+
+        Utility.getInstance().getLoginResponse().getUsuario().setUsername(username);
+        Utility.getInstance().getLoginResponse().getUsuario().setCorreo(correo);
+        Utility.getInstance().getLoginResponse().getUsuario().setNombre(nombre);
+        Utility.getInstance().getLoginResponse().getUsuario().setApellido(apellido);
+        Utility.getInstance().getLoginResponse().getUsuario().setDocumento(cedula);
+        Utility.getInstance().getLoginResponse().getUsuario().setTelefono(telefono);
+        Utility.getInstance().getLoginResponse().getUsuario().setDireccion(direccion);
     }
 
 }
