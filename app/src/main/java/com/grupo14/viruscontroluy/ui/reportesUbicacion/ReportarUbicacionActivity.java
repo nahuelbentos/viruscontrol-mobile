@@ -54,7 +54,7 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
     private LatLng mCurrentLatLng;
 
     Handler handler = new Handler();
-    private final int TIEMPO = 100000;
+    private final int TIEMPO = 10000;
 
     ToggleButton tgbtn;
     ToggleButton tgbtnManual;
