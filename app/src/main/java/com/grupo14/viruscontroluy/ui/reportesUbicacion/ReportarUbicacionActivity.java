@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -54,10 +55,11 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
     private LatLng mCurrentLatLng;
 
     Handler handler = new Handler();
-    private final int TIEMPO = 10000;
-
-    ToggleButton tgbtn;
-    ToggleButton tgbtnManual;
+    private final int TIEMPO = 100000;
+    Switch switchPeriodico;
+    Switch switchManual;
+//    ToggleButton tgbtn;
+//    ToggleButton tgbtnManual;
     TextView textManual;
     Button buttonManual;
     SharedPreferences sharpref;
@@ -94,27 +96,30 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
         sharpref = getApplicationContext().getSharedPreferences("ReporteUbicacion",MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharpref.edit();
 
-        tgbtn = (ToggleButton) findViewById(R.id.tgbtn1);
-        tgbtnManual = (ToggleButton) findViewById(R.id.tgbtn2);
+//        tgbtn = (ToggleButton) findViewById(R.id.tgbtn1);
+//        tgbtnManual = (ToggleButton) findViewById(R.id.tgbtn2);
+
+        switchPeriodico = (Switch) findViewById(R.id.switchPeriodico);
+        switchManual = (Switch) findViewById(R.id.switchManual);
         textManual = findViewById(R.id.textManual);
         buttonManual = findViewById(R.id.buttonManual);
 
-        boolean valortgbtn = sharpref.getBoolean("tgbtn", false);
-        boolean valorttgbtnManual = sharpref.getBoolean("tgbtnManual", false);
+        boolean valorswitchPeriodico = sharpref.getBoolean("switchPeriodico", false);
+        boolean valorswitchManual = sharpref.getBoolean("switchManual", false);
         boolean valorttextManual = sharpref.getBoolean("textManual", false);
-        tgbtn.setChecked(valortgbtn);
-        tgbtnManual.setChecked(valorttgbtnManual);
-        if(valortgbtn == true && valorttgbtnManual == false) {
-            tgbtnManual.setVisibility(View.VISIBLE);
+        switchPeriodico.setChecked(valorswitchPeriodico);
+        switchManual.setChecked(valorswitchManual);
+        if(valorswitchPeriodico == true && valorswitchManual == false) {
+            switchManual.setVisibility(View.VISIBLE);
             textManual.setVisibility(View.VISIBLE);
         }
-        if(valorttgbtnManual == true) {
-            tgbtnManual.setVisibility(View.VISIBLE);
+        if(valorswitchManual == true) {
+            switchManual.setVisibility(View.VISIBLE);
             buttonManual.setVisibility(View.VISIBLE);
             textManual.setVisibility(View.VISIBLE);
         }
-        if (valortgbtn == false) {
-            tgbtnManual.setVisibility(View.INVISIBLE);
+        if (valorswitchPeriodico == false) {
+            switchManual.setVisibility(View.INVISIBLE);
             textManual.setVisibility(View.INVISIBLE);
         }
         mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
@@ -136,44 +141,44 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
             }
         });
 
-        tgbtnManual.setOnClickListener(new View.OnClickListener() {
+        switchManual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(tgbtnManual.isChecked()) {
-                    editor.putBoolean("tgbtnManual", true);
+                if(switchManual.isChecked()) {
+                    editor.putBoolean("switchManual", true);
                     editor.putBoolean("textManual", true);
                 }else
-                    editor.putBoolean("tgbtnManual", false);
+                    editor.putBoolean("switchManual", false);
                 editor.commit();
                 onclickManual();
             }
         });
 
-        tgbtn.setOnClickListener(new View.OnClickListener() {
+        switchPeriodico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onclick();
-                if(tgbtn.isChecked())
-                    editor.putBoolean("tgbtn", true);
+                if(switchPeriodico.isChecked())
+                    editor.putBoolean("switchPeriodico", true);
                 else
-                    editor.putBoolean("tgbtn", false);
+                    editor.putBoolean("switchPeriodico", false);
                 editor.commit();
             }
         });
     }
 
     public void onclick() {
-        if(tgbtn.isChecked()){
+        if(switchPeriodico.isChecked()){
             enviarUbicacionPeriodicamente();
         }
-        if(tgbtnManual.getVisibility() == View.INVISIBLE) {
-            tgbtnManual.setVisibility(View.VISIBLE);
+        if(switchManual.getVisibility() == View.INVISIBLE) {
+            switchManual.setVisibility(View.VISIBLE);
             textManual.setVisibility(View.VISIBLE);
         }
         else{
-            tgbtnManual.setVisibility(View.INVISIBLE);
-            if(tgbtnManual.isChecked())
-                tgbtnManual.toggle();
+            switchManual.setVisibility(View.INVISIBLE);
+            if(switchManual.isChecked())
+                switchManual.toggle();
             textManual.setVisibility(View.INVISIBLE);
             buttonManual.setVisibility(View.INVISIBLE);
         }
@@ -185,7 +190,7 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
             buttonManual.setVisibility(View.VISIBLE);
         else
             buttonManual.setVisibility(View.INVISIBLE);
-        if(tgbtn.isChecked() && !tgbtnManual.isChecked()){
+        if(switchPeriodico.isChecked() && !switchManual.isChecked()){
             enviarUbicacionPeriodicamente();
         }
     }
@@ -207,7 +212,7 @@ public class ReportarUbicacionActivity extends AppCompatActivity {
 
     public void reportarUbicacionManual() {
 
-            Toast.makeText(this, "Reportaste ubicación", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Reportaste ubicación", Toast.LENGTH_SHORT).show();
     //        if(mCurrentLatLng != null){
     //            Toast.makeText(this, "Latitud: " + mCurrentLatLng.latitude, Toast.LENGTH_SHORT).show();
     //            Toast.makeText(this, "longitude: " + mCurrentLatLng.longitude, Toast.LENGTH_SHORT).show();
